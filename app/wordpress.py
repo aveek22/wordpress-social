@@ -4,9 +4,8 @@ from config import Config
 WORDPRESS_URL = 'https://public-api.wordpress.com/'
 AUTH_TOKEN_URL = f'{WORDPRESS_URL}oauth2/token'
 
-SITE_ID = 167697861
-POST_ID = 142
-POSTS_URL = f'{WORDPRESS_URL}rest/v1.1/sites/{SITE_ID}/posts/{POST_ID}'
+
+POSTS_URL = f'{WORDPRESS_URL}rest/v1.1/sites/{Config.SITE_ID}/posts/{Config.POST_ID}'
 
 
 auth_message_body = {
