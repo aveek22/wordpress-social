@@ -130,3 +130,6 @@ dmypy.json
 
 # Custom configuration file
 config.py
+
+# Sandbox
+sandbox/
