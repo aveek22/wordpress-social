@@ -5,11 +5,11 @@ from config import Facebook
 # https://www.youtube.com/watch?v=tfjmW0LEb64
 
 page_id = Facebook.PAGE_ID
-access_token = Facebook.ACCESS_TOKEN
+access_token = Facebook.PAGE_ACCESS_TOKEN
 user_id = Facebook.USER_ID
 
 
-text = f"Solving the Gilded Rose Refactoring Kata by @[{user_id}]."
+text = f"Solving the Gilded Rose Refactoring Kata by @[{user_id}]. 123"
 url = "https://datacloudmag.com/solving-the-gilded-rose-refactoring-kata/"
 hashtags = "#python #refactoring"
 
