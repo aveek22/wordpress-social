@@ -33,13 +33,17 @@ class ShareLinkedIn:
         """ Prepare the content payload to share. """
         
         organization_id = "79377523"
+        username = "Aveek Das"
         linkedin_user_id = "urn:li:person:G0CopwI-SP"
-        share_text = "Code Refactoring by Aveek Das - Solving the Gilded Rose Refactoring Kata \n#python #sql"
+        
+        share_text = f"Code Refactoring by Aveek Das - Solving the Gilded Rose Refactoring Kata \n#python #sql"
+        share_title = "Solving the Gilded Rose Refactoring Kata"
         share_url = "https://datacloudmag.com/solving-the-gilded-rose-refactoring-kata/"
         share_thumbnail = "https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/02/pexels-photo-169573.jpeg"
-        share_title = "Test Share"
-        linkedin_user_id.length = 9
-        linkedin_user_id.start = 20
+        
+        linkedin_username_position_length = self._get_linkedin_username_position_length(share_text, username)
+        linkedin_user_id_start = linkedin_username_position_length['position']
+        linkedin_user_id_length = linkedin_username_position_length['length']
 
 
         payload = {
@@ -65,8 +69,8 @@ class ShareLinkedIn:
                 'annotations': [
                     {
                         'entity' : linkedin_user_id,
-                        'length' : linkedin_user_id.length,
-                        'start' : linkedin_user_id.start
+                        'length' : linkedin_user_id_length,
+                        'start' : linkedin_user_id_start
                     }
                 ]
             }
@@ -75,7 +79,7 @@ class ShareLinkedIn:
         return payload
 
 
-    def _get_linkedin_user_name_position(username, text):
+    def _get_linkedin_username_position_length(self, text, username):
         """
             Returns the start position and length of username in the text.
 
@@ -83,12 +87,24 @@ class ShareLinkedIn:
             start = 32
             length = 9
         """
-        pass
+        username_position_length = {
+            'position' : text.find(username),
+            'length' : len(username)
+        }
+
+        return username_position_length
 
     
-    def post_content(self):
+    def post_content(self, payload):
         """ Share the content on LinkedIn Page. """
-        pass
+        
+        url = self.share_url
+        headers = self.header
+        
+        response = requests.post(url=url, headers=headers, json = payload)
+
+        print(response.status_code)
+        print(response.json())
 
     
     def _get_access_token_from_parameter_store(self):
