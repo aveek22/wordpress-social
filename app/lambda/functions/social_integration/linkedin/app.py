@@ -40,10 +40,10 @@ if __name__ == '__main__':
     """ Execute the main function from the local runtime. """
 
     # Import test lambda_event_context module
-    import lambda_event_context
+    import lambda_event
 
     # Get the test SQS payload for Lambda function
-    sqs_payload = lambda_event_context.get_lambda_event()
+    sqs_payload = lambda_event.get_lambda_event()
 
     # Parse the SQS payload and return event
     event = parse_event(sqs_payload)

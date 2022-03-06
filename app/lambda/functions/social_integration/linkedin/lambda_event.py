@@ -13,7 +13,7 @@ def get_lambda_event():
     """ Read linkedin_event.json file and return a mock SQS event payload. """
 
     try:
-        with open('app/lambda/functions/social_integration/linkedin/linkedin_event.json', 'r') as f:
+        with open('app/lambda/functions/social_integration/linkedin/event.json', 'r') as f:
             data = json.load(f)
         log.debug(f'Reading from JSON event file successful.')
     except Exception as e:
