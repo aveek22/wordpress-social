@@ -1,0 +1,171 @@
+{
+    "ID": 1036,
+    "site_ID": 167697861,
+    "author": {
+        "ID": 106784275,
+        "login": "aveekd22",
+        "email": false,
+        "name": "Aveek",
+        "first_name": "Aveek",
+        "last_name": "Das",
+        "nice_name": "aveekd22",
+        "URL": "https://datacloudmag.com",
+        "avatar_URL": "https://secure.gravatar.com/avatar/fc1459d34c2a2d58a7939ca98d48c1a3?s=96&d=identicon&r=g",
+        "profile_URL": "https://en.gravatar.com/fc1459d34c2a2d58a7939ca98d48c1a3"
+    },
+    "date": "2022-03-13T21:13:04+01:00",
+    "modified": "2022-03-13T21:13:04+01:00",
+    "title": "Hello From python",
+    "URL": "https://datacloudmag.com/hello-from-python/",
+    "short_URL": "https://wp.me/pblDSd-gI",
+    "content": "<p>This is test HTML content. </p>\n<p>This is a paragraph.</p>\n<h1>Heading 1</h1>\n",
+    "excerpt": "<p>This is test HTML content. This is a paragraph. Heading 1</p>\n",
+    "slug": "hello-from-python",
+    "guid": "https://datacloudmag.com/hello-from-python/",
+    "status": "publish",
+    "sticky": false,
+    "password": "",
+    "parent": false,
+    "type": "post",
+    "discussion": {
+        "comments_open": true,
+        "comment_status": "open",
+        "pings_open": true,
+        "ping_status": "open",
+        "comment_count": 0
+    },
+    "likes_enabled": true,
+    "sharing_enabled": true,
+    "like_count": 0,
+    "i_like": false,
+    "is_reblogged": false,
+    "is_following": true,
+    "global_ID": "07184d7a531e2a8607d8916e8ce0bcf5",
+    "featured_image": "",
+    "format": "standard",
+    "geo": false,
+    "menu_order": 0,
+    "page_template": "",
+    "publicize_URLs": [],
+    "terms": {
+        "category": {
+            "Python": {
+                "ID": 352048818,
+                "name": "Python",
+                "slug": "python",
+                "description": "All about Python.",
+                "post_count": 2,
+                "parent": 0,
+                "meta": {
+                    "links": {
+                        "self": "https://public-api.wordpress.com/rest/v1.1/sites/167697861/categories/slug:python",
+                        "help": "https://public-api.wordpress.com/rest/v1.2/sites/167697861/categories/slug:python/help",
+                        "site": "https://public-api.wordpress.com/rest/v1.2/sites/167697861"
+                    }
+                }
+            }
+        },
+        "post_tag": {
+            "python": {
+                "ID": 352048819,
+                "name": "python",
+                "slug": "python",
+                "description": "",
+                "post_count": 3,
+                "meta": {
+                    "links": {
+                        "self": "https://public-api.wordpress.com/rest/v1.1/sites/167697861/tags/slug:python",
+                        "help": "https://public-api.wordpress.com/rest/v1.2/sites/167697861/tags/slug:python/help",
+                        "site": "https://public-api.wordpress.com/rest/v1.2/sites/167697861"
+                    }
+                }
+            },
+            "wordpress": {
+                "ID": 352048918,
+                "name": "wordpress",
+                "slug": "wordpress",
+                "description": "",
+                "post_count": 1,
+                "meta": {
+                    "links": {
+                        "self": "https://public-api.wordpress.com/rest/v1.1/sites/167697861/tags/slug:wordpress",
+                        "help": "https://public-api.wordpress.com/rest/v1.2/sites/167697861/tags/slug:wordpress/help",
+                        "site": "https://public-api.wordpress.com/rest/v1.2/sites/167697861"
+                    }
+                }
+            }
+        },
+        "post_format": {}
+    },
+    "tags": {
+        "python": {
+            "ID": 352048819,
+            "name": "python",
+            "slug": "python",
+            "description": "",
+            "post_count": 3,
+            "meta": {
+                "links": {
+                    "self": "https://public-api.wordpress.com/rest/v1.1/sites/167697861/tags/slug:python",
+                    "help": "https://public-api.wordpress.com/rest/v1.2/sites/167697861/tags/slug:python/help",
+                    "site": "https://public-api.wordpress.com/rest/v1.2/sites/167697861"
+                }
+            }
+        },
+        "wordpress": {
+            "ID": 352048918,
+            "name": "wordpress",
+            "slug": "wordpress",
+            "description": "",
+            "post_count": 1,
+            "meta": {
+                "links": {
+                    "self": "https://public-api.wordpress.com/rest/v1.1/sites/167697861/tags/slug:wordpress",
+                    "help": "https://public-api.wordpress.com/rest/v1.2/sites/167697861/tags/slug:wordpress/help",
+                    "site": "https://public-api.wordpress.com/rest/v1.2/sites/167697861"
+                }
+            }
+        }
+    },
+    "categories": {
+        "Python": {
+            "ID": 352048818,
+            "name": "Python",
+            "slug": "python",
+            "description": "All about Python.",
+            "post_count": 2,
+            "meta": {
+                "links": {
+                    "self": "https://public-api.wordpress.com/rest/v1.1/sites/167697861/categories/slug:python",
+                    "help": "https://public-api.wordpress.com/rest/v1.2/sites/167697861/categories/slug:python/help",
+                    "site": "https://public-api.wordpress.com/rest/v1.2/sites/167697861"
+                }
+            },
+            "parent": 0
+        }
+    },
+    "attachments": {},
+    "attachment_count": 0,
+    "metadata": [
+        {
+            "id": "2706",
+            "key": "_wpas_done_all",
+            "value": "1"
+        }
+    ],
+    "meta": {
+        "links": {
+            "self": "https://public-api.wordpress.com/rest/v1.1/sites/167697861/posts/1036",
+            "help": "https://public-api.wordpress.com/rest/v1.2/sites/167697861/posts/1036/help",
+            "site": "https://public-api.wordpress.com/rest/v1.2/sites/167697861",
+            "replies": "https://public-api.wordpress.com/rest/v1.1/sites/167697861/posts/1036/replies/",
+            "likes": "https://public-api.wordpress.com/rest/v1.2/sites/167697861/posts/1036/likes/"
+        }
+    },
+    "capabilities": {
+        "publish_post": true,
+        "delete_post": true,
+        "edit_post": true
+    },
+    "other_URLs": {}
+}
