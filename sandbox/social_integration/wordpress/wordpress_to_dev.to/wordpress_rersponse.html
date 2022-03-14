@@ -1,0 +1,1134 @@
+
+<h1>Introduction</h1>
+
+
+
+<p><a href="https://www.linkedin.com/">LinkedIn</a> is a popular social media platform that allows users to connect to each other and maintain professional network. You can manage your profile and also create a company profile for your organization. An interesting feature of LinkedIn is the ability to share posts on your feed or on your organization’s feed. You can embed URLs, provide hashtags and emojis and also share images and videos in your post. Although the primary way of sharing content on LinkedIn is by using the web application, you can also do it programmatically using the <a href="https://docs.microsoft.com/en-us/linkedin/">REST APIs</a> provided by LinkedIn and a programming language of your choice.</p>
+
+
+
+<p>In this article, we are going to learn how to use the <a href="https://docs.microsoft.com/en-us/linkedin/">LinkedIn REST APIs</a> and share content from your personal profile as well as from an organization’s profile that you manage. Don’t worry if you do not have an organization as I will guide you from the scratch.</p>
+
+
+
+<h2>Pre-requisites</h2>
+
+
+
+<p>In order to proceed further, we need to have the following pre-requisites.</p>
+
+
+
+<ol><li><strong>LinkedIn Account</strong> &#8211; You need to have a LinkedIn account, if you do not have one, please head over to <a href="https://www.linkedin.com/"></a><a href="https://www.linkedin.com/">https://www.linkedin.com/</a> and create one.</li><li><strong>REST APIs</strong> &#8211; Some basic knowledge of using REST APIs.</li><li><strong>Python</strong> &#8211; General programming knowledge of using python and using REST APIs in python.</li></ol>
+
+
+
+<p>Apart from the above-mentioned, I am going to use Jupyter notebooks to create the codebase and make it available using GitHub. At any point in time, you can choose to refer to the official documentation of LinkedIn from Microsoft, however, I will try to explain the process in simple terms.</p>
+
+
+
+<h1>Creating the LinkedIn Company Page and Application</h1>
+
+
+
+<p>Assuming that you already have your LinkedIn account created, now we will create the following two assets.</p>
+
+
+
+<ol><li><a href="https://business.linkedin.com/marketing-solutions/linkedin-pages">LinkedIn Company Page</a> &#8211; Also, can be referred to as the Company page, we need to create it using your personal account. You will be an admin for the Company page that you create.</li><li><a href="https://developer.linkedin.com/">An Application on the Developers portal</a> &#8211; In order to get access to the LinkedIn REST APIs, we need to create an application, that will assume the permissions on our behalf and share content on your profile or from the organisation’s profile.</li></ol>
+
+
+
+<h2>Create the LinkedIn Company Page.</h2>
+
+
+
+<p>Let’s create a company page from your LinkedIn account. You can think of any dummy name for your company to proceed forward. I am going to use my company as “<em>DataScholar</em>”.</p>
+
+
+
+<p><em><strong>Step 1</strong></em>: Open LinkedIn account. Click on <strong>Work</strong> and select <strong>Create a Company Page</strong>. Click on <strong>Company</strong> and enter the details and click on <strong>Create Page</strong>.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="993" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?fit=1734%2C696&amp;ssl=1" data-orig-size="1734,696" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?fit=300%2C120&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?fit=1024%2C411&amp;ssl=1" loading="lazy" width="1024" height="411" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?resize=1024%2C411&#038;ssl=1" alt="" class="wp-image-993" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?resize=1024%2C411&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?resize=300%2C120&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?resize=768%2C308&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?resize=1536%2C617&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?resize=1200%2C482&amp;ssl=1 1200w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled.png?w=1734&amp;ssl=1 1734w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 1 &#8211; Create LinkedIn company page</figcaption></figure>
+
+
+
+<p><em><strong>Step 2</strong></em>: You need to provide the following details for your company page to be created.</p>
+
+
+
+<ol><li><strong>Name</strong> &#8211; The name of your company. I am using <em>DataScholar</em>.</li><li><strong>Company</strong> <strong>URL</strong> &#8211; The LinkedIn username of your company.</li><li><strong>Website</strong> &#8211; The website your company is hosted on. I am going to use “<em><a href="https://thedatascholar.com">https://thedatascholar.com</a></em>”.</li><li><strong>Industry</strong> &#8211; Select as <em>Software</em>.</li><li><strong>Company</strong> <strong>Size</strong> &#8211; I have selected <em>between 0 and 1</em> since I am the sole user of the company.</li><li><strong>Company</strong> <strong>Type</strong> &#8211; <em>Non-profit</em>.</li><li><strong>Logo</strong> &#8211; Any custom image for your company logo.</li><li><strong>Tagline</strong> &#8211; A short description of your company.</li></ol>
+
+
+
+<p>Once you have provided all these details, your LinkedIn company page has been created now.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="994" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-1/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?fit=3128%2C1852&amp;ssl=1" data-orig-size="3128,1852" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-1" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?fit=300%2C178&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?fit=1024%2C606&amp;ssl=1" loading="lazy" width="1024" height="606" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?resize=1024%2C606&#038;ssl=1" alt="" class="wp-image-994" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?resize=1024%2C606&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?resize=300%2C178&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?resize=768%2C455&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?resize=1536%2C909&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?resize=2048%2C1213&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?resize=1200%2C710&amp;ssl=1 1200w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-1.png?w=3000&amp;ssl=1 3000w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 2 &#8211; LinkedIn company page</figcaption></figure>
+
+
+
+<h2>Create the LinkedIn app in the Developer Portal.</h2>
+
+
+
+<p>In this section, we will dig a bit deeper and create an application on LinkedIn Developer’s platform that will allow us to interact with the LinkedIn assets programmatically.</p>
+
+
+
+<p><em><strong>Step 1</strong></em>: Navigate to <a href="https://developer.linkedin.com/"></a><a href="https://developer.linkedin.com/">https://developer.linkedin.com/</a>. Click on <strong>My Apps</strong> and then select <strong>Create App</strong>. Enter the details for your application.</p>
+
+
+
+<ol><li><strong>App Name</strong> &#8211; The name for your application. You can use the same name as your company.</li><li><strong>LinkedIn Page</strong> &#8211; The company page that the app will be associated with.</li><li><strong>Privacy Policy URL</strong> &#8211; Optional field.</li><li><strong>App Logo</strong> &#8211; Upload a logo for your app.</li></ol>
+
+
+
+<p>Agree to the terms and then click on <strong>Create App</strong>.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="996" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-2/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?fit=2880%2C1422&amp;ssl=1" data-orig-size="2880,1422" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-2" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?fit=300%2C148&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?fit=1024%2C506&amp;ssl=1" loading="lazy" width="1024" height="506" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?resize=1024%2C506&#038;ssl=1" alt="" class="wp-image-996" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?resize=768%2C379&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?resize=1536%2C758&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?resize=2048%2C1011&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-2.png?resize=1200%2C593&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 3 &#8211; Creating LinkedIn App</figcaption></figure>
+
+
+
+<p><em><strong>Step 2</strong></em>: Click <strong>Verify</strong> to verify your application.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="997" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-3/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?fit=2880%2C1422&amp;ssl=1" data-orig-size="2880,1422" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-3" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?fit=300%2C148&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?fit=1024%2C506&amp;ssl=1" loading="lazy" width="1024" height="506" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?resize=1024%2C506&#038;ssl=1" alt="" class="wp-image-997" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?resize=768%2C379&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?resize=1536%2C758&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?resize=2048%2C1011&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-3.png?resize=1200%2C593&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 4 &#8211; Verify LinkedIn application</figcaption></figure>
+
+
+
+<p><em><strong>Step 3</strong></em>: Click <strong>Generate URL</strong> and copy the URL and click <strong>I’m Done</strong>.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1018" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-4-1/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?fit=2880%2C1422&amp;ssl=1" data-orig-size="2880,1422" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-4-1" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?fit=300%2C148&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?fit=1024%2C506&amp;ssl=1" loading="lazy" width="1024" height="506" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?resize=1024%2C506&#038;ssl=1" alt="" class="wp-image-1018" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?resize=768%2C379&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?resize=1536%2C758&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?resize=2048%2C1011&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-4-1.png?resize=1200%2C593&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 5 &#8211; Generate verification URL for the LinkedIn app</figcaption></figure>
+
+
+
+<p><em><strong>Step 4</strong></em>: Copy and hit the URL on the browser. It will ask you to verify the app for the page.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1019" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-5-1/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?fit=2880%2C1422&amp;ssl=1" data-orig-size="2880,1422" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-5-1" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?fit=300%2C148&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?fit=1024%2C506&amp;ssl=1" loading="lazy" width="1024" height="506" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?resize=1024%2C506&#038;ssl=1" alt="" class="wp-image-1019" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?resize=768%2C379&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?resize=1536%2C758&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?resize=2048%2C1011&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-5-1.png?resize=1200%2C593&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 6 &#8211; Verify LinkedIn app and Company association</figcaption></figure>
+
+
+
+<p><em><strong>Step 5</strong></em>: Click on <strong>Verify</strong>.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1021" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-6/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?fit=2880%2C1422&amp;ssl=1" data-orig-size="2880,1422" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-6" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?fit=300%2C148&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?fit=1024%2C506&amp;ssl=1" loading="lazy" width="1024" height="506" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?resize=1024%2C506&#038;ssl=1" alt="" class="wp-image-1021" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?resize=768%2C379&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?resize=1536%2C758&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?resize=2048%2C1011&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-6.png?resize=1200%2C593&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure  7- LinkedIn app and Company association verified</figcaption></figure>
+
+
+
+<p>Great! You have now successfully created a LinkedIn company page and also created an app to interact with LinkedIn using the REST APIs.</p>
+
+
+
+<h1>Configure your LinkedIn App</h1>
+
+
+
+<p>Let’s configure the LinkedIn app that we have created in the previous section. We will add the products required to access the LinkedIn REST APIs and store the app credentials.</p>
+
+
+
+<h2>Add the products for your LinkedIn App.</h2>
+
+
+
+<p>Once you have created the LinkedIn App, you need to define what are the products that you are going to use with your app. Based on this, your app will be provided with the necessary permissions that you need. There are three products available to choose from.</p>
+
+
+
+<ol><li><strong>Share on LinkedIn</strong> &#8211; This allows you to post content from your profile.</li><li><strong>Sign In with LinkedIn</strong> &#8211; This allows you to use LinkedIn social sign on your webpage.</li><li><strong>Marketing Developer Platform</strong> &#8211; Allows you to post content from your page.</li></ol>
+
+
+
+<p>As a part of this article, I am going to add all three products to my app.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1001" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-7/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?fit=2880%2C1422&amp;ssl=1" data-orig-size="2880,1422" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-7" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?fit=300%2C148&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?fit=1024%2C506&amp;ssl=1" loading="lazy" width="1024" height="506" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?resize=1024%2C506&#038;ssl=1" alt="" class="wp-image-1001" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?resize=768%2C379&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?resize=1536%2C758&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?resize=2048%2C1011&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-7.png?resize=1200%2C593&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 8 &#8211; Add products to LinkedIn app</figcaption></figure>
+
+
+
+<p>The <strong>Marketing Developer Platform</strong> requires additional access. You will receive a form for this. Fill up the form and wait for approval (2 business days). Click on the <strong>View Access Form</strong> and fill it up with relevant details.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1002" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-8/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?fit=2880%2C1578&amp;ssl=1" data-orig-size="2880,1578" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-8" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?fit=300%2C164&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?fit=1024%2C561&amp;ssl=1" loading="lazy" width="1024" height="561" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?resize=1024%2C561&#038;ssl=1" alt="" class="wp-image-1002" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?resize=1024%2C561&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?resize=300%2C164&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?resize=768%2C421&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?resize=1536%2C842&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?resize=2048%2C1122&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-8.png?resize=1200%2C658&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 9 &#8211; Fill up review form for Marketing Developer Platform</figcaption></figure>
+
+
+
+<p>Once you submit the form, it might take up to 2 business days to get an answer by email. You will then notice the app has been added to your product list.</p>
+
+
+
+<div class="wp-block-coblocks-alert" aria-label="Alert section"><p class="wp-block-coblocks-alert__text">💡 The <em><strong>Marketing Developer Platform</strong></em> allows you to post content from your company page. Without adding it, you can still post content from your personal LinkedIn profile.</p></div>
+
+
+
+<h2>Fetch and store the app credentials.</h2>
+
+
+
+<p><em><strong>Step 1</strong></em>: On your LinkedIn app, click on the <strong>Auth</strong> tab. You can find the <strong>Client ID</strong> and <strong>Client Secret</strong> that you need later.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1003" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-9/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?fit=2880%2C1422&amp;ssl=1" data-orig-size="2880,1422" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-9" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?fit=300%2C148&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?fit=1024%2C506&amp;ssl=1" loading="lazy" width="1024" height="506" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?resize=1024%2C506&#038;ssl=1" alt="" class="wp-image-1003" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?resize=768%2C379&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?resize=1536%2C758&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?resize=2048%2C1011&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-9.png?resize=1200%2C593&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 10 &#8211; Store LinkedIn app credentials</figcaption></figure>
+
+
+
+<p><em><strong>Step 2</strong></em>: Add the redirect URL for your App. This can simply be your webpage URL appended with “<em>/auth/linkedin/callback</em>”.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1005" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-10/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?fit=2880%2C1578&amp;ssl=1" data-orig-size="2880,1578" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-10" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?fit=300%2C164&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?fit=1024%2C561&amp;ssl=1" loading="lazy" width="1024" height="561" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?resize=1024%2C561&#038;ssl=1" alt="" class="wp-image-1005" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?resize=1024%2C561&amp;ssl=1 1024w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?resize=300%2C164&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?resize=768%2C421&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?resize=1536%2C842&amp;ssl=1 1536w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?resize=2048%2C1122&amp;ssl=1 2048w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-10.png?resize=1200%2C658&amp;ssl=1 1200w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1" /><figcaption>Figure 11 &#8211; Setup app Redirect URI</figcaption></figure>
+
+
+
+<p><em><strong>Step 3</strong></em>: Get the <strong>Organization ID</strong> from the company URL.</p>
+
+
+
+<figure class="wp-block-image size-full"><img data-attachment-id="1006" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-11/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-11.png?fit=912%2C68&amp;ssl=1" data-orig-size="912,68" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-11" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-11.png?fit=300%2C22&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-11.png?fit=912%2C68&amp;ssl=1" loading="lazy" width="912" height="68" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-11.png?resize=912%2C68&#038;ssl=1" alt="" class="wp-image-1006" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-11.png?w=912&amp;ssl=1 912w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-11.png?resize=300%2C22&amp;ssl=1 300w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-11.png?resize=768%2C57&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-11.png?resize=900%2C68&amp;ssl=1 900w" sizes="(max-width: 912px) 100vw, 912px" data-recalc-dims="1" /><figcaption>Figure 12 &#8211; Get Organization ID</figcaption></figure>
+
+
+
+<h1>Start assembling your Python code</h1>
+
+
+
+<p>Now let’s start building the python program that would allow us to interact with the LinkedIn REST APIs.</p>
+
+
+
+<h2>Setup static variables and libraries</h2>
+
+
+
+<p>In order to work with REST APIs in python, we will leverage the <code>requests</code> library. You can install it using the python <code>pip</code> manager. In addition to that, we will also create variables to store our <code>client_id</code>, <code>client_secret</code>, and <code>organization_id</code> that we have obtained in the previous section.</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler"><div class="wp-block-embed__wrapper">
+<style>.gist table { margin-bottom: 0; }</style><div style="tab-size: 8" id="gist115185115" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-social_linkedin_static_import-py" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  ">
+
+      
+<div class="js-check-bidi js-blob-code-container blob-code-content">
+
+  <template class="js-file-alert-template">
+  <div data-view-component="true" class="flash flash-warn flash-full d-flex flex-items-center">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+  
+    <span>
+      This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
+      <a href="https://github.co/hiddenchars" target="_blank">Learn more about bidirectional Unicode characters</a>
+    </span>
+
+
+  <div data-view-component="true" class="flash-action">        <a href="{{ revealButtonHref }}" data-view-component="true" class="btn-sm btn">  Show hidden characters
+</a>
+</div>
+</div></template>
+<template class="js-line-alert-template">
+  <span aria-label="This line has hidden Unicode characters" data-view-component="true" class="line-alert tooltipped tooltipped-e">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+</span></template>
+
+  <table class="highlight tab-size js-file-line-container js-code-nav-container js-tagsearch-file" data-tab-size="8" data-paste-markdown-skip data-tagsearch-lang="Python" data-tagsearch-path="social_linkedin_static_import.py">
+        <tr>
+          <td id="file-social_linkedin_static_import-py-L1" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="1"></td>
+          <td id="file-social_linkedin_static_import-py-LC1" class="blob-code blob-code-inner js-file-line"><span class=pl-k>import</span> <span class=pl-s1>requests</span>                 <span class=pl-c># To deal with REST APIs</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_static_import-py-L2" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="2"></td>
+          <td id="file-social_linkedin_static_import-py-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_static_import-py-L3" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="3"></td>
+          <td id="file-social_linkedin_static_import-py-LC3" class="blob-code blob-code-inner js-file-line"><span class=pl-c># Get the ClientID and ClientSecret to get the access token</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_static_import-py-L4" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="4"></td>
+          <td id="file-social_linkedin_static_import-py-LC4" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>client_id</span>       <span class=pl-c1>=</span> <span class=pl-s>&quot;YOUR_CLIENT_ID&quot;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_static_import-py-L5" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="5"></td>
+          <td id="file-social_linkedin_static_import-py-LC5" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>client_secret</span>   <span class=pl-c1>=</span> <span class=pl-s>&quot;YOUR_CLIENT_SECRET&quot;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_static_import-py-L6" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="6"></td>
+          <td id="file-social_linkedin_static_import-py-LC6" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>organization_id</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;YOUR_ORGANIZATION_ID&quot;</span></td>
+        </tr>
+  </table>
+</div>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/aveek22/89b1b6d2423cdeefff59779b30ede7f6/raw/da50dd0fd7408dec5c62c95163af13006e5a75d9/social_linkedin_static_import.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/aveek22/89b1b6d2423cdeefff59779b30ede7f6#file-social_linkedin_static_import-py">
+          social_linkedin_static_import.py
+        </a>
+        hosted with &#10084; by <a href="https://github.com">GitHub</a>
+      </div>
+    </div>
+</div>
+
+</div></figure>
+
+
+
+<p>In the next steps, we need to get an Access Token that can be used to share content from the LinkedIn profile. The Access Token can be obtained in two steps as follows.</p>
+
+
+
+<ol><li>A <strong>GET</strong> request that will ask the user to allow your app to obtain the required permissions and redirect you to a new URL. From this URL, you’ll need to extract the value in the parameter code.</li><li>A <strong>POST</strong> request that will return your brand new Access Token.</li></ol>
+
+
+
+<h2>Create the GET request to obtain verification code</h2>
+
+
+
+<p>Setup the following details to build the URL.</p>
+
+
+
+<ul><li><code>base_url</code>: The LinkedIn endpoint to obtain authorization code.</li><li><code>redirect_uri</code>: The redirect URL you have set while creating your app.</li><li><code>scope</code>: The scope required to publish content from your personal profile.</li><li><code>state</code>: A random text that will be returned to you after authorization. This allows you to verify the response from CSRF attacks. For simplicity, let’s not bother much about it now.</li></ul>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler"><div class="wp-block-embed__wrapper">
+<style>.gist table { margin-bottom: 0; }</style><div style="tab-size: 8" id="gist115185255" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-social_linkedin_auth-py" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  ">
+
+      
+<div class="js-check-bidi js-blob-code-container blob-code-content">
+
+  <template class="js-file-alert-template">
+  <div data-view-component="true" class="flash flash-warn flash-full d-flex flex-items-center">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+  
+    <span>
+      This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
+      <a href="https://github.co/hiddenchars" target="_blank">Learn more about bidirectional Unicode characters</a>
+    </span>
+
+
+  <div data-view-component="true" class="flash-action">        <a href="{{ revealButtonHref }}" data-view-component="true" class="btn-sm btn">  Show hidden characters
+</a>
+</div>
+</div></template>
+<template class="js-line-alert-template">
+  <span aria-label="This line has hidden Unicode characters" data-view-component="true" class="line-alert tooltipped tooltipped-e">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+</span></template>
+
+  <table class="highlight tab-size js-file-line-container js-code-nav-container js-tagsearch-file" data-tab-size="8" data-paste-markdown-skip data-tagsearch-lang="Python" data-tagsearch-path="social_linkedin_auth.py">
+        <tr>
+          <td id="file-social_linkedin_auth-py-L1" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="1"></td>
+          <td id="file-social_linkedin_auth-py-LC1" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>base_url</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;<a href="https://www.linkedin.com/oauth/v2/authorization&#038;quot" rel="nofollow">https://www.linkedin.com/oauth/v2/authorization&#038;quot</a>;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_auth-py-L2" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="2"></td>
+          <td id="file-social_linkedin_auth-py-LC2" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>redirect_uri</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;<a href="https://thedatascholar.com/auth/linkedin/callback&#038;quot" rel="nofollow">https://thedatascholar.com/auth/linkedin/callback&#038;quot</a>;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_auth-py-L3" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="3"></td>
+          <td id="file-social_linkedin_auth-py-LC3" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>scope</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;w_member_social,r_liteprofile&quot;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_auth-py-L4" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="4"></td>
+          <td id="file-social_linkedin_auth-py-LC4" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_auth-py-L5" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="5"></td>
+          <td id="file-social_linkedin_auth-py-LC5" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>url</span> <span class=pl-c1>=</span> <span class=pl-s>f&quot;<span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>base_url</span><span class=pl-kos>}</span></span>?response_type=code&amp;client_id=<span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>client_id</span><span class=pl-kos>}</span></span>&amp;state=random&amp;redirect_uri=<span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>redirect_uri</span><span class=pl-kos>}</span></span>&amp;scope=<span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>scope</span><span class=pl-kos>}</span></span>&quot;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_auth-py-L6" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="6"></td>
+          <td id="file-social_linkedin_auth-py-LC6" class="blob-code blob-code-inner js-file-line"><span class=pl-en>print</span>(<span class=pl-s1>url</span>)</td>
+        </tr>
+  </table>
+</div>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/aveek22/8978355f31b779cc8cd2b6d844bf9d34/raw/0e906ad72da0c40e5cdb0350023360cf299eaa94/social_linkedin_auth.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/aveek22/8978355f31b779cc8cd2b6d844bf9d34#file-social_linkedin_auth-py">
+          social_linkedin_auth.py
+        </a>
+        hosted with &#10084; by <a href="https://github.com">GitHub</a>
+      </div>
+    </div>
+</div>
+
+</div></figure>
+
+
+
+<p>When you run the above code, it will print the URL on your console. Copy the URL and hit it in your browser. You will be asked to log in with your LinkedIn credentials. Once your login is verified, it will redirect you to the address mentioned in the <code>redirect_uri</code>. You will also receive two parameters, <code>code</code>, and <code>state</code> in this URL. Copy the value of the <code>code</code> and store it for processing the next request.</p>
+
+
+
+<div class="wp-block-coblocks-alert" aria-label="Alert section"><p class="wp-block-coblocks-alert__text">💡 To publish content from your company page, you need more permissions in your scope. This can be obtained once you have received verification for the <strong>Marketing Developer Platform</strong> from the LinkedIn team.</p></div>
+
+
+
+<h2>Create the POST request to obtain the Access Token</h2>
+
+
+
+<p>Now that the verification code has been obtained, we can get the access token by sending a POST request to LinkedIn. You need to provide the following as a payload in the POST request.</p>
+
+
+
+<ul><li><code>grant_type</code>: The grant type should be ‘<em>authorization_code</em>’.</li><li><code>code</code>: The authorization code obtained in the previous step.</li><li><code>redirect_uri</code>: The redirect URI of your app.</li><li><code>client_id</code>: The client ID that we stored earlier.</li><li><code>client_secret</code>: The client secret that we stored earlier.</li></ul>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler"><div class="wp-block-embed__wrapper">
+<style>.gist table { margin-bottom: 0; }</style><div style="tab-size: 8" id="gist115185353" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-social_linkedin_access_token-py" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  ">
+
+      
+<div class="js-check-bidi js-blob-code-container blob-code-content">
+
+  <template class="js-file-alert-template">
+  <div data-view-component="true" class="flash flash-warn flash-full d-flex flex-items-center">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+  
+    <span>
+      This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
+      <a href="https://github.co/hiddenchars" target="_blank">Learn more about bidirectional Unicode characters</a>
+    </span>
+
+
+  <div data-view-component="true" class="flash-action">        <a href="{{ revealButtonHref }}" data-view-component="true" class="btn-sm btn">  Show hidden characters
+</a>
+</div>
+</div></template>
+<template class="js-line-alert-template">
+  <span aria-label="This line has hidden Unicode characters" data-view-component="true" class="line-alert tooltipped tooltipped-e">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+</span></template>
+
+  <table class="highlight tab-size js-file-line-container js-code-nav-container js-tagsearch-file" data-tab-size="8" data-paste-markdown-skip data-tagsearch-lang="Python" data-tagsearch-path="social_linkedin_access_token.py">
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L1" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="1"></td>
+          <td id="file-social_linkedin_access_token-py-LC1" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>url_access_token</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;<a href="https://www.linkedin.com/oauth/v2/accessToken&#038;quot" rel="nofollow">https://www.linkedin.com/oauth/v2/accessToken&#038;quot</a>;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L2" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="2"></td>
+          <td id="file-social_linkedin_access_token-py-LC2" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>auth_code</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;YOUR_AUTH_CODE_FROM_PREVIOUS_VERIFICATION&quot;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L3" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="3"></td>
+          <td id="file-social_linkedin_access_token-py-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L4" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="4"></td>
+          <td id="file-social_linkedin_access_token-py-LC4" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>payload</span> <span class=pl-c1>=</span> {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L5" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="5"></td>
+          <td id="file-social_linkedin_access_token-py-LC5" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;grant_type&#39;</span> : <span class=pl-s>&#39;authorization_code&#39;</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L6" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="6"></td>
+          <td id="file-social_linkedin_access_token-py-LC6" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;code&#39;</span> : <span class=pl-s1>auth_code</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L7" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="7"></td>
+          <td id="file-social_linkedin_access_token-py-LC7" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;redirect_uri&#39;</span> : <span class=pl-s1>redirect_uri</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L8" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="8"></td>
+          <td id="file-social_linkedin_access_token-py-LC8" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;client_id&#39;</span> : <span class=pl-s1>client_id</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L9" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="9"></td>
+          <td id="file-social_linkedin_access_token-py-LC9" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;client_secret&#39;</span> : <span class=pl-s1>client_secret</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L10" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="10"></td>
+          <td id="file-social_linkedin_access_token-py-LC10" class="blob-code blob-code-inner js-file-line">}</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L11" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="11"></td>
+          <td id="file-social_linkedin_access_token-py-LC11" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L12" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="12"></td>
+          <td id="file-social_linkedin_access_token-py-LC12" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>response</span> <span class=pl-c1>=</span> <span class=pl-s1>requests</span>.<span class=pl-en>post</span>(<span class=pl-s1>url</span><span class=pl-c1>=</span><span class=pl-s1>url_access_token</span>, <span class=pl-s1>params</span><span class=pl-c1>=</span><span class=pl-s1>payload</span>)</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L13" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="13"></td>
+          <td id="file-social_linkedin_access_token-py-LC13" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>response_json</span> <span class=pl-c1>=</span> <span class=pl-s1>response</span>.<span class=pl-en>json</span>()</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L14" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="14"></td>
+          <td id="file-social_linkedin_access_token-py-LC14" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L15" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="15"></td>
+          <td id="file-social_linkedin_access_token-py-LC15" class="blob-code blob-code-inner js-file-line"><span class=pl-c># Extract the access_token from the response_json</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_access_token-py-L16" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="16"></td>
+          <td id="file-social_linkedin_access_token-py-LC16" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>access_token</span> <span class=pl-c1>=</span> <span class=pl-s1>response_json</span>[<span class=pl-s>&#39;access_token&#39;</span>]</td>
+        </tr>
+  </table>
+</div>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/aveek22/253b85ff96e450d7171833e4dade52ad/raw/b548453262cb41de94e03136184b22169f9c9aae/social_linkedin_access_token.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/aveek22/253b85ff96e450d7171833e4dade52ad#file-social_linkedin_access_token-py">
+          social_linkedin_access_token.py
+        </a>
+        hosted with &#10084; by <a href="https://github.com">GitHub</a>
+      </div>
+    </div>
+</div>
+
+</div></figure>
+
+
+
+<p>If the POST request is successful, you will receive a JSON response that will contain the <code>access_token</code>. I have extracted and stored it in a separate variable.</p>
+
+
+
+<h2>Get your LinkedIn profile ID</h2>
+
+
+
+<p>In order to post content from your LinkedIn profile, you need to obtain your profile ID. This can be done by querying the LinkedIn REST API directly.</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler"><div class="wp-block-embed__wrapper">
+<style>.gist table { margin-bottom: 0; }</style><div style="tab-size: 8" id="gist115185383" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-social_linkedin_profile-py" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  ">
+
+      
+<div class="js-check-bidi js-blob-code-container blob-code-content">
+
+  <template class="js-file-alert-template">
+  <div data-view-component="true" class="flash flash-warn flash-full d-flex flex-items-center">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+  
+    <span>
+      This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
+      <a href="https://github.co/hiddenchars" target="_blank">Learn more about bidirectional Unicode characters</a>
+    </span>
+
+
+  <div data-view-component="true" class="flash-action">        <a href="{{ revealButtonHref }}" data-view-component="true" class="btn-sm btn">  Show hidden characters
+</a>
+</div>
+</div></template>
+<template class="js-line-alert-template">
+  <span aria-label="This line has hidden Unicode characters" data-view-component="true" class="line-alert tooltipped tooltipped-e">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+</span></template>
+
+  <table class="highlight tab-size js-file-line-container js-code-nav-container js-tagsearch-file" data-tab-size="8" data-paste-markdown-skip data-tagsearch-lang="Python" data-tagsearch-path="social_linkedin_profile.py">
+        <tr>
+          <td id="file-social_linkedin_profile-py-L1" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="1"></td>
+          <td id="file-social_linkedin_profile-py-LC1" class="blob-code blob-code-inner js-file-line"><span class=pl-c># Get LinkedIn user ID</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L2" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="2"></td>
+          <td id="file-social_linkedin_profile-py-LC2" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>url</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;<a href="https://api.linkedin.com/v2/me&#038;quot" rel="nofollow">https://api.linkedin.com/v2/me&#038;quot</a>;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L3" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="3"></td>
+          <td id="file-social_linkedin_profile-py-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L4" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="4"></td>
+          <td id="file-social_linkedin_profile-py-LC4" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>header</span> <span class=pl-c1>=</span> {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L5" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="5"></td>
+          <td id="file-social_linkedin_profile-py-LC5" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;Authorization&#39;</span> : <span class=pl-s>f&#39;Bearer <span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>access_token</span><span class=pl-kos>}</span></span>&#39;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L6" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="6"></td>
+          <td id="file-social_linkedin_profile-py-LC6" class="blob-code blob-code-inner js-file-line">}</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L7" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="7"></td>
+          <td id="file-social_linkedin_profile-py-LC7" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L8" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="8"></td>
+          <td id="file-social_linkedin_profile-py-LC8" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>response</span> <span class=pl-c1>=</span> <span class=pl-s1>requests</span>.<span class=pl-en>get</span>(<span class=pl-s1>url</span><span class=pl-c1>=</span><span class=pl-s1>url</span>, <span class=pl-s1>headers</span><span class=pl-c1>=</span><span class=pl-s1>header</span>)</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L9" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="9"></td>
+          <td id="file-social_linkedin_profile-py-LC9" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>response_json_li_person</span> <span class=pl-c1>=</span> <span class=pl-s1>response</span>.<span class=pl-en>json</span>()</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L10" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="10"></td>
+          <td id="file-social_linkedin_profile-py-LC10" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_profile-py-L11" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="11"></td>
+          <td id="file-social_linkedin_profile-py-LC11" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>person_id</span> <span class=pl-c1>=</span> <span class=pl-s1>response_json_li_person</span>[<span class=pl-s>&#39;id&#39;</span>]</td>
+        </tr>
+  </table>
+</div>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/aveek22/de44ea0d5a0d322a0ce98c2e26ea4502/raw/6c478f3028fcd1f7a120388b8e41d12214029f9d/social_linkedin_profile.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/aveek22/de44ea0d5a0d322a0ce98c2e26ea4502#file-social_linkedin_profile-py">
+          social_linkedin_profile.py
+        </a>
+        hosted with &#10084; by <a href="https://github.com">GitHub</a>
+      </div>
+    </div>
+</div>
+
+</div></figure>
+
+
+
+<p>Notice that I have passed the <code>access_token</code> as a bearer token in the authorization header. Also, I have stored the LinkedIn profile ID in a variable called <code>person_id</code>.</p>
+
+
+
+<h2>Share content from LinkedIn Personal Profile</h2>
+
+
+
+<p>Let’s prepare the content that we want to share from our LinkedIn personal profile. I have selected a random <a href="https://www.redhat.com/en/topics/api/what-is-a-rest-api">article from Redhat</a> that I would like to share. Also, I would like to add a thumbnail image to the content that is shared. For that, you can choose any image that is publicly available. Notice that the payload contains the key <code>owner</code> and the value is the profile ID that we obtained in the earlier step. This value determines if the post is to be shared from the personal profile or from the company page.</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler"><div class="wp-block-embed__wrapper">
+<style>.gist table { margin-bottom: 0; }</style><div style="tab-size: 8" id="gist115185405" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-social_linkedin_share_post_personal-py" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  ">
+
+      
+<div class="js-check-bidi js-blob-code-container blob-code-content">
+
+  <template class="js-file-alert-template">
+  <div data-view-component="true" class="flash flash-warn flash-full d-flex flex-items-center">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+  
+    <span>
+      This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
+      <a href="https://github.co/hiddenchars" target="_blank">Learn more about bidirectional Unicode characters</a>
+    </span>
+
+
+  <div data-view-component="true" class="flash-action">        <a href="{{ revealButtonHref }}" data-view-component="true" class="btn-sm btn">  Show hidden characters
+</a>
+</div>
+</div></template>
+<template class="js-line-alert-template">
+  <span aria-label="This line has hidden Unicode characters" data-view-component="true" class="line-alert tooltipped tooltipped-e">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+</span></template>
+
+  <table class="highlight tab-size js-file-line-container js-code-nav-container js-tagsearch-file" data-tab-size="8" data-paste-markdown-skip data-tagsearch-lang="Python" data-tagsearch-path="social_linkedin_share_post_personal.py">
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L1" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="1"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC1" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>url</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;<a href="https://api.linkedin.com/v2/shares&#038;quot" rel="nofollow">https://api.linkedin.com/v2/shares&#038;quot</a>;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L2" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="2"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L3" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="3"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC3" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>headers</span> <span class=pl-c1>=</span> {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L4" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="4"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC4" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;Authorization&#39;</span> : <span class=pl-s>f&#39;Bearer <span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>access_token</span><span class=pl-kos>}</span></span>&#39;</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L5" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="5"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC5" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;Content-Type&#39;</span> : <span class=pl-s>&#39;application/json&#39;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L6" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="6"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC6" class="blob-code blob-code-inner js-file-line">}</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L7" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="7"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC7" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L8" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="8"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC8" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>payload</span> <span class=pl-c1>=</span> {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L9" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="9"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC9" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&quot;content&quot;</span>: {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L10" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="10"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC10" class="blob-code blob-code-inner js-file-line">        <span class=pl-s>&quot;contentEntities&quot;</span>: [</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L11" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="11"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC11" class="blob-code blob-code-inner js-file-line">            {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L12" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="12"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC12" class="blob-code blob-code-inner js-file-line">                <span class=pl-s>&quot;entityLocation&quot;</span>: <span class=pl-s>&quot;<a href="https://www.redhat.com/en/topics/api/what-is-a-rest-api&#038;quot" rel="nofollow">https://www.redhat.com/en/topics/api/what-is-a-rest-api&#038;quot</a>;</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L13" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="13"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC13" class="blob-code blob-code-inner js-file-line">                <span class=pl-s>&quot;thumbnails&quot;</span>: [</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L14" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="14"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC14" class="blob-code blob-code-inner js-file-line">                    {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L15" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="15"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC15" class="blob-code blob-code-inner js-file-line">                        <span class=pl-s>&quot;resolvedUrl&quot;</span>: <span class=pl-s>&quot;<a href="https://images.pexels.com/photos/2115217/pexels-photo-2115217.jpeg&#038;quot" rel="nofollow">https://images.pexels.com/photos/2115217/pexels-photo-2115217.jpeg&#038;quot</a>;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L16" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="16"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC16" class="blob-code blob-code-inner js-file-line">                    }</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L17" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="17"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC17" class="blob-code blob-code-inner js-file-line">                ]</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L18" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="18"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC18" class="blob-code blob-code-inner js-file-line">            }</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L19" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="19"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC19" class="blob-code blob-code-inner js-file-line">        ],</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L20" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="20"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC20" class="blob-code blob-code-inner js-file-line">        <span class=pl-s>&quot;title&quot;</span>: <span class=pl-s>&quot;What is a REST API?&quot;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L21" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="21"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC21" class="blob-code blob-code-inner js-file-line">    },</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L22" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="22"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC22" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;distribution&#39;</span>: {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L23" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="23"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC23" class="blob-code blob-code-inner js-file-line">        <span class=pl-s>&#39;linkedInDistributionTarget&#39;</span>: {}</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L24" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="24"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC24" class="blob-code blob-code-inner js-file-line">    },</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L25" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="25"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC25" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;owner&#39;</span>: <span class=pl-s>f&#39;urn:li:person:<span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>person_id</span><span class=pl-kos>}</span></span>&#39;</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L26" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="26"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC26" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;text&#39;</span>: {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L27" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="27"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC27" class="blob-code blob-code-inner js-file-line">        <span class=pl-s>&#39;text&#39;</span>: <span class=pl-s>f&#39;Learn more about REST APIs in details.  <span class=pl-cce>\n</span>#restapi #api&#39;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L28" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="28"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC28" class="blob-code blob-code-inner js-file-line">    }</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L29" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="29"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC29" class="blob-code blob-code-inner js-file-line">}</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L30" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="30"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC30" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L31" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="31"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC31" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>response</span> <span class=pl-c1>=</span> <span class=pl-s1>requests</span>.<span class=pl-en>post</span>(<span class=pl-s1>url</span><span class=pl-c1>=</span><span class=pl-s1>url</span>, <span class=pl-s1>headers</span><span class=pl-c1>=</span><span class=pl-s1>headers</span>, <span class=pl-s1>json</span> <span class=pl-c1>=</span> <span class=pl-s1>payload</span>)</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L32" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="32"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC32" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_personal-py-L33" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="33"></td>
+          <td id="file-social_linkedin_share_post_personal-py-LC33" class="blob-code blob-code-inner js-file-line"><span class=pl-en>print</span>(<span class=pl-s1>response</span>.<span class=pl-en>json</span>())</td>
+        </tr>
+  </table>
+</div>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/aveek22/aa6f179dcd42bfb25caa7ea7cae09ec6/raw/64abc195a831f960f0227f6092bbad6873c86a33/social_linkedin_share_post_personal.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/aveek22/aa6f179dcd42bfb25caa7ea7cae09ec6#file-social_linkedin_share_post_personal-py">
+          social_linkedin_share_post_personal.py
+        </a>
+        hosted with &#10084; by <a href="https://github.com">GitHub</a>
+      </div>
+    </div>
+</div>
+
+</div></figure>
+
+
+
+<p>If you want to understand the payload in more depth, please refer to the <a href="https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/share-api?tabs=http#post-shares">official documentation</a>. There is a clear explanation of what each of the fields in the payload is about. Once the request is successful, the content will be shared from your personal profile and it will appear in the feed as follows.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1012" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-12/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-12.png?fit=1136%2C1384&amp;ssl=1" data-orig-size="1136,1384" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-12" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-12.png?fit=246%2C300&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-12.png?fit=841%2C1024&amp;ssl=1" loading="lazy" width="841" height="1024" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-12.png?resize=841%2C1024&#038;ssl=1" alt="" class="wp-image-1012" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-12.png?resize=841%2C1024&amp;ssl=1 841w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-12.png?resize=246%2C300&amp;ssl=1 246w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-12.png?resize=768%2C936&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-12.png?w=1136&amp;ssl=1 1136w" sizes="(max-width: 841px) 100vw, 841px" data-recalc-dims="1" /><figcaption>Figure 13 &#8211; Post shared from the personal profile on LinkedIn</figcaption></figure>
+
+
+
+<h2>Share content from LinkedIn Company Page</h2>
+
+
+
+<p>Sharing content from an organization’s page is almost similar to that of sharing from a personal profile. The only key that determines whether the post content is to be shared from a personal or organization’s profile is the <code>owner</code>. The following values are accepted for the <code>owner</code> key.</p>
+
+
+
+<ul><li><strong>Personal Profile</strong>: <code>urn:li:person:{person_id}</code></li><li><strong>Organization</strong>: <code>urn:li:organization:{organization_id}</code></li></ul>
+
+
+
+<p>You can fetch the organization_id from the URL of your company page. With that, now the payload can be modified and content shared from the organization’s profile.</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-embed-handler wp-block-embed-embed-handler"><div class="wp-block-embed__wrapper">
+<style>.gist table { margin-bottom: 0; }</style><div style="tab-size: 8" id="gist115191020" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-social_linkedin_share_post_organization-py" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  ">
+
+      
+<div class="js-check-bidi js-blob-code-container blob-code-content">
+
+  <template class="js-file-alert-template">
+  <div data-view-component="true" class="flash flash-warn flash-full d-flex flex-items-center">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+  
+    <span>
+      This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
+      <a href="https://github.co/hiddenchars" target="_blank">Learn more about bidirectional Unicode characters</a>
+    </span>
+
+
+  <div data-view-component="true" class="flash-action">        <a href="{{ revealButtonHref }}" data-view-component="true" class="btn-sm btn">  Show hidden characters
+</a>
+</div>
+</div></template>
+<template class="js-line-alert-template">
+  <span aria-label="This line has hidden Unicode characters" data-view-component="true" class="line-alert tooltipped tooltipped-e">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path>
+</svg>
+</span></template>
+
+  <table class="highlight tab-size js-file-line-container js-code-nav-container js-tagsearch-file" data-tab-size="8" data-paste-markdown-skip data-tagsearch-lang="Python" data-tagsearch-path="social_linkedin_share_post_organization.py">
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L1" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="1"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC1" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>url</span> <span class=pl-c1>=</span> <span class=pl-s>&quot;<a href="https://api.linkedin.com/v2/shares&#038;quot" rel="nofollow">https://api.linkedin.com/v2/shares&#038;quot</a>;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L2" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="2"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L3" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="3"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC3" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>headers</span> <span class=pl-c1>=</span> {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L4" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="4"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC4" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;Authorization&#39;</span> : <span class=pl-s>f&#39;Bearer <span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>access_token</span><span class=pl-kos>}</span></span>&#39;</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L5" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="5"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC5" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;Content-Type&#39;</span> : <span class=pl-s>&#39;application/json&#39;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L6" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="6"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC6" class="blob-code blob-code-inner js-file-line">}</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L7" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="7"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC7" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L8" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="8"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC8" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>payload</span> <span class=pl-c1>=</span> {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L9" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="9"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC9" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&quot;content&quot;</span>: {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L10" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="10"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC10" class="blob-code blob-code-inner js-file-line">        <span class=pl-s>&quot;contentEntities&quot;</span>: [</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L11" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="11"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC11" class="blob-code blob-code-inner js-file-line">            {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L12" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="12"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC12" class="blob-code blob-code-inner js-file-line">                <span class=pl-s>&quot;entityLocation&quot;</span>: <span class=pl-s>&quot;<a href="https://www.redhat.com/en/topics/api/what-is-a-rest-api&#038;quot" rel="nofollow">https://www.redhat.com/en/topics/api/what-is-a-rest-api&#038;quot</a>;</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L13" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="13"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC13" class="blob-code blob-code-inner js-file-line">                <span class=pl-s>&quot;thumbnails&quot;</span>: [</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L14" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="14"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC14" class="blob-code blob-code-inner js-file-line">                    {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L15" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="15"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC15" class="blob-code blob-code-inner js-file-line">                        <span class=pl-s>&quot;resolvedUrl&quot;</span>: <span class=pl-s>&quot;<a href="https://images.pexels.com/photos/2115217/pexels-photo-2115217.jpeg&#038;quot" rel="nofollow">https://images.pexels.com/photos/2115217/pexels-photo-2115217.jpeg&#038;quot</a>;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L16" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="16"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC16" class="blob-code blob-code-inner js-file-line">                    }</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L17" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="17"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC17" class="blob-code blob-code-inner js-file-line">                ]</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L18" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="18"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC18" class="blob-code blob-code-inner js-file-line">            }</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L19" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="19"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC19" class="blob-code blob-code-inner js-file-line">        ],</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L20" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="20"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC20" class="blob-code blob-code-inner js-file-line">        <span class=pl-s>&quot;title&quot;</span>: <span class=pl-s>&quot;What is a REST API?&quot;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L21" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="21"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC21" class="blob-code blob-code-inner js-file-line">    },</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L22" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="22"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC22" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;distribution&#39;</span>: {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L23" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="23"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC23" class="blob-code blob-code-inner js-file-line">        <span class=pl-s>&#39;linkedInDistributionTarget&#39;</span>: {}</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L24" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="24"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC24" class="blob-code blob-code-inner js-file-line">    },</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L25" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="25"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC25" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;owner&#39;</span>: <span class=pl-s>f&#39;urn:li:organization:<span class=pl-s1><span class=pl-kos>{</span><span class=pl-s1>organization_id</span><span class=pl-kos>}</span></span>&#39;</span>,</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L26" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="26"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC26" class="blob-code blob-code-inner js-file-line">    <span class=pl-s>&#39;text&#39;</span>: {</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L27" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="27"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC27" class="blob-code blob-code-inner js-file-line">        <span class=pl-s>&#39;text&#39;</span>: <span class=pl-s>f&#39;Learn more about REST APIs in details.  <span class=pl-cce>\n</span>#restapi #api&#39;</span></td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L28" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="28"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC28" class="blob-code blob-code-inner js-file-line">    }</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L29" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="29"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC29" class="blob-code blob-code-inner js-file-line">}</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L30" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="30"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC30" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L31" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="31"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC31" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>response</span> <span class=pl-c1>=</span> <span class=pl-s1>requests</span>.<span class=pl-en>post</span>(<span class=pl-s1>url</span><span class=pl-c1>=</span><span class=pl-s1>url</span>, <span class=pl-s1>headers</span><span class=pl-c1>=</span><span class=pl-s1>headers</span>, <span class=pl-s1>json</span> <span class=pl-c1>=</span> <span class=pl-s1>payload</span>)</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L32" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="32"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC32" class="blob-code blob-code-inner js-file-line">
+</td>
+        </tr>
+        <tr>
+          <td id="file-social_linkedin_share_post_organization-py-L33" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="33"></td>
+          <td id="file-social_linkedin_share_post_organization-py-LC33" class="blob-code blob-code-inner js-file-line"><span class=pl-en>print</span>(<span class=pl-s1>response</span>.<span class=pl-en>json</span>())</td>
+        </tr>
+  </table>
+</div>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/aveek22/651ce87c660ebee304b78dbd85713343/raw/a360f2f6cab61ffa847998ad86a9640e93248861/social_linkedin_share_post_organization.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/aveek22/651ce87c660ebee304b78dbd85713343#file-social_linkedin_share_post_organization-py">
+          social_linkedin_share_post_organization.py
+        </a>
+        hosted with &#10084; by <a href="https://github.com">GitHub</a>
+      </div>
+    </div>
+</div>
+
+</div></figure>
+
+
+
+<p>This will post the content from your organization’s profile and you will have it on your feed.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1013" data-permalink="https://datacloudmag.com/linkedin-rest-api-python/untitled-13/" data-orig-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-13.png?fit=1138%2C1312&amp;ssl=1" data-orig-size="1138,1312" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Untitled-13" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-13.png?fit=260%2C300&amp;ssl=1" data-large-file="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-13.png?fit=888%2C1024&amp;ssl=1" loading="lazy" width="888" height="1024" src="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-13.png?resize=888%2C1024&#038;ssl=1" alt="" class="wp-image-1013" srcset="https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-13.png?resize=888%2C1024&amp;ssl=1 888w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-13.png?resize=260%2C300&amp;ssl=1 260w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-13.png?resize=768%2C885&amp;ssl=1 768w, https://i0.wp.com/datacloudmag.com/wp-content/uploads/2022/03/Untitled-13.png?w=1138&amp;ssl=1 1138w" sizes="(max-width: 888px) 100vw, 888px" data-recalc-dims="1" /><figcaption>Figure 14 &#8211; Post shared from organization’s profile on LinkedIn</figcaption></figure>
+
+
+
+<div class="wp-block-coblocks-alert" aria-label="Alert section"><p class="wp-block-coblocks-alert__text">💡 To post content from the organization’s profile, you need to wait until you have received the email from LinkedIn which might take 2 business days.</p></div>
+
+
+
+<h1>Conclusion</h1>
+
+
+
+<p>In this article, we have focused on how to use the LinkedIn REST APIs and share content from a personal profile as well as from an organization’s profile. This is just a beginner level introduction to using the LinkedIn REST APIs. Apart from sharing content, you can also use other <a href="https://developer.linkedin.com/product-catalog">products</a> to interact with LinkedIn Ads, and Campaign Management Tools.</p>
+
+
+
+<h2>Resources</h2>
+
+
+
+<p>If you want to learn more about LinkedIn REST APIs, I would recommend reading through the following.</p>
+
+
+
+<ul><li><a href="https://docs.microsoft.com/en-us/linkedin/shared/authentication/authentication"></a><a href="https://docs.microsoft.com/en-us/linkedin/shared/authentication/authentication">https://docs.microsoft.com/en-us/linkedin/shared/authentication/authentication</a></li><li><a href="https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/share-api"></a><a href="https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/share-api">https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/share-api</a></li><li><a href="https://developer.linkedin.com/product-catalog"></a><a href="https://developer.linkedin.com/product-catalog">https://developer.linkedin.com/product-catalog</a></li></ul>
