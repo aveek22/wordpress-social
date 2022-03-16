@@ -1,0 +1,20 @@
+{
+    "Records": [
+        {
+            "messageId": "1d7d6170-4261-4b40-957c-4be97e38ad82",
+            "receiptHandle": "AQEBFKXHI28li2ExeJt0D/o/RgYToIHFP5dzsrfnPy4vSYgoEAHsnkgAGqxWCllAFv8iSC5gmyyzIj/65jhaR1ZkaNKv9kw108HqRESNH7DKAxxDRp18HVUTR3fm0DOdFqDqV7evJkW+Rtm9a7nxIv/yRZJZ83MHwrsXLrjfD8BQvXEFO85gGs9fDhBYNgnWgWk1WDXfL6D//A7aJadC02dfm7uGextgYXKP4AVT4AiV2MVF4nJ1QCuLxWY6ShYG+XTGVMKfa2X+Nyw4iFqoTa3vs+RKcv8hdRr/3k9czGHemb+zG/+0IvUVdFyyJ6j7pwK74BOyODH1GJk+KbtSuoX6C03j2EPluIEcjKiwotAdQmQQElqjAkcwDVLvTFUjNTjUCHu2tULPbhIr/gmc5ifU0xfVLGmOCYziskNgyEHXD6s=",
+            "body": "{'li_share_text': 'text','li_share_title': 'title','li_share_url': 'url','li_share_thumbnail': 'image'}",
+            "attributes": {
+                "ApproximateReceiveCount": "1",
+                "SentTimestamp": "1647461610500",
+                "SenderId": "890277245818",
+                "ApproximateFirstReceiveTimestamp": "1647461612500"
+            },
+            "messageAttributes": {},
+            "md5OfBody": "c319f256b3bf4dc0ba40d768d8627eb4",
+            "eventSource": "aws:sqs",
+            "eventSourceARN": "arn:aws:sqs:eu-west-1:890277245818:wordpress_social_linkedin_sqs_queue",
+            "awsRegion": "eu-west-1"
+        }
+    ]
+}
