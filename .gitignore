@@ -133,3 +133,12 @@ config.py
 
 # Sandbox
 # sandbox/
+
+
+# Terraform files
+.terraform
+*.hcl
+
+# Lambda Layer Packages
+app/lambda/layers/packages/
+app/lambda/layers/requests.zip

@@ -1,0 +1,9 @@
+name: deploy_aws
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy_aws:
