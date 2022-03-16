@@ -1,9 +1,12 @@
 # Import system libraries
 import boto3            # To interact with the AWS resources
 import requests         # Use REST API calls to interact with services
-import logging as log   # Log messages for debugging
+import logging          # Log messages for debugging
 
-log.basicConfig(level=log.DEBUG)
+
+# Setup Logger
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
 
 class PublishLinkedIn:
     """ Publish content to LinkedIn page. """

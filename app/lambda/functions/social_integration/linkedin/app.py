@@ -4,19 +4,32 @@
 
 # Import system modules
 import json
+import logging
 
 # Import custom modules
 from publish import PublishLinkedIn
 
 
+# Setup Logger
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
+
+
 def main(event, context):
     """ Lambda Handler for LinkedIn content publish """
+
+    log.info(f'Received event from SQS: {event}')
+
+    # Parse the SQS payload and return event
+    parsed_event = parse_event(event)
+    log.info(f'Parsed Event: {parsed_event}')
     
     # Create the LinkedIn object
     linkedin = PublishLinkedIn()
 
     # Get the payload from event
-    payload = linkedin.get_payload(event)
+    payload = linkedin.get_payload(parsed_event)
+    log.info(f'Payload: {payload}')
 
     # Share content to LinkedIn page.
     linkedin.post_content(payload)
@@ -29,7 +42,7 @@ def parse_event(sqs_payload):
         event = sqs_payload['Records'][0]['body']
         event = event.replace("\'", "\"")
         event = json.loads(event)
-        print(event)
+        # log.debug(f'Parsed event from SQS: {event}')
     except:
         event = False
 
@@ -44,11 +57,7 @@ if __name__ == '__main__':
 
     # Get the test SQS payload for Lambda function
     sqs_payload = lambda_event.get_lambda_event()
-
-    # Parse the SQS payload and return event
-    event = parse_event(sqs_payload)
-    context = ''
     
     # Trigger the main function
-    if(event):
-        main(event, context)
+    if(sqs_payload):
+        main(sqs_payload, '')
