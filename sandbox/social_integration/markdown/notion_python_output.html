@@ -1,0 +1,54 @@
+<h1>Introduction to LinkedIn REST API</h1>
+<p><a href="https://www.linkedin.com/">LinkedIn</a> is a popular social media platform that allows users to connect to each other and maintain professional network. You can manage your profile and also create a company profile for your organization. An interesting feature of LinkedIn is the ability to share posts on your feed or on your organization’s feed. You can embed URLs, provide hashtags and emojis and also share images and videos in your post. Although the primary way of sharing content on LinkedIn is by using the web application, you can also do it programmatically using the <a href="https://docs.microsoft.com/en-us/linkedin/">REST APIs</a> provided by LinkedIn and a programming language of your choice.</p>
+<h2>Pre-requisites</h2>
+<p>In order to proceed further, we need to have the following pre-requisites.</p>
+<ol>
+<li><strong>LinkedIn Account</strong> - You need to have a LinkedIn account, if you do not have one, please head over to <a href="https://www.linkedin.com/">https://www.linkedin.com/</a> and create one.</li>
+<li><strong>REST APIs</strong> - Some basic knowledge of using REST APIs.</li>
+<li><strong>Python</strong> - General programming knowledge of using python and using REST APIs in python.</li>
+</ol>
+<p>Apart from the above-mentioned, I am going to use Jupyter notebooks to create the codebase and make it available using GitHub. At any point in time, you can choose to refer to the official documentation of LinkedIn from Microsoft, however, I will try to explain the process in simple terms.</p>
+<h2>Create the LinkedIn Company Page.</h2>
+<p>Let’s create a company page from your LinkedIn account. You can think of any dummy name for your company to proceed forward. I am going to use my company as “<em>TheDataScholar</em>”.</p>
+<p><strong><em>Step 1</em></strong>: Open LinkedIn account. Click on <strong>Work</strong> and select <strong>Create a Company Page</strong>. Click on <strong>Company</strong> and enter the details and click on <strong>Create Page</strong>. </p>
+<p><img alt="https://i.imgur.com/bI4wFaj.png" src="https://i.imgur.com/bI4wFaj.png" /></p>
+<p><strong><em>Step 2</em></strong>: You need to provide the following details for your company page to be created.</p>
+<ol>
+<li><strong>Name</strong> - The name of your company. I am using <em>TheDataScholar</em>.</li>
+<li><strong>Company</strong> <strong>URL</strong> - The LinkedIn username of your company.</li>
+<li><strong>Website</strong> - The website your company is hosted on. I am going to use “<em>https://thedatascholar.com</em>”.</li>
+<li><strong>Industry</strong> - Select as <em>Software</em>.</li>
+</ol>
+<p>Once you submit the form, it might take up to 2 business days to get an answer by email. You will then notice the app has been added to your product list.</p>
+<blockquote>
+<p>💡 The <strong><em>Marketing Developer Platform</em></strong> allows you to post content from your company page. Without adding it, you can still post content from your personal LinkedIn profile.</p>
+</blockquote>
+<h2>Get your LinkedIn profile ID</h2>
+<p>In order to post content from your LinkedIn profile, you need to obtain your profile ID. This can be done by querying the LinkedIn REST API directly.</p>
+<pre><code class="language-python"># Get LinkedIn user ID
+url = &quot;https://api.linkedin.com/v2/me&quot;
+
+header = {
+    'Authorization' : f'Bearer {access_token}'
+}
+
+response = requests.get(url=url, headers=header)
+response_json_li_person = response.json()
+
+person_id = response_json_li_person['id']
+
+# https://gist.github.com/aveek22/de44ea0d5a0d322a0ce98c2e26ea4502
+</code></pre>
+<p>Notice that I have passed the <code>access_token</code> as a bearer token in the authorization header. Also, I have stored the LinkedIn profile ID in a variable called <code>person_id</code>.</p>
+<script src="https://gist.github.com/aveek22/89b1b6d2423cdeefff59779b30ede7f6.js"></script>
+
+<p><img alt="https://i.imgur.com/LZmWo6s.png" src="https://i.imgur.com/LZmWo6s.png" /></p>
+<h2>Conclusion</h2>
+<p>In this article, we have focused on how to use the LinkedIn REST APIs and share content from a personal profile as well as from an organization’s profile. This is just a beginner level introduction to using the LinkedIn REST APIs. Apart from sharing content, you can also use other <a href="https://developer.linkedin.com/product-catalog">products</a> to interact with LinkedIn Ads, and Campaign Management Tools.</p>
+<h3>Resources</h3>
+<p>If you want to learn more about LinkedIn REST APIs, I would recommend reading through the following.</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/linkedin/shared/authentication/authentication">https://docs.microsoft.com/en-us/linkedin/shared/authentication/authentication</a></li>
+<li><a href="https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/share-api">https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/shares/share-api</a></li>
+<li><a href="https://developer.linkedin.com/product-catalog">https://developer.linkedin.com/product-catalog</a></li>
+</ul>
