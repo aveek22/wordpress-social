@@ -1,9 +1,9 @@
 resource "aws_sqs_queue" "wordpress_social_linkedin_sqs_queue" {
   name                      = "wordpress_social_linkedin_sqs_queue"
-  delay_seconds             = 20
+  delay_seconds             = 2
   max_message_size          = 2048
-  message_retention_seconds = 86400
-  receive_wait_time_seconds = 10
+  message_retention_seconds = 60
+  receive_wait_time_seconds = 2
 
   tags = {
     Application = "wordpress-social"
