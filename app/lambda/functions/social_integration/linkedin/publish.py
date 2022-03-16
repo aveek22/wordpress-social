@@ -104,10 +104,10 @@ class PublishLinkedIn:
         username = self.username
         linkedin_user_id = self.linkedin_user_id
         
-        share_text = event['share_text']
-        share_title = event['share_title']
-        share_url = event['share_url']
-        share_thumbnail = event['share_thumbnail']
+        share_text = event['li_share_text']
+        share_title = event['li_share_title']
+        share_url = event['li_share_url']
+        share_thumbnail = event['li_share_thumbnail']
         
         linkedin_username_position_length = self._get_linkedin_username_position_length(share_text, username)
         linkedin_user_id_start = linkedin_username_position_length['position']

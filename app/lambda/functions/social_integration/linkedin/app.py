@@ -39,7 +39,7 @@ def parse_event(sqs_payload):
 if __name__ == '__main__':
     """ Execute the main function from the local runtime. """
 
-    # Import test lambda_event_context module
+    # Import test lambda_event module
     import lambda_event
 
     # Get the test SQS payload for Lambda function
