@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "wordpress-social"
+version = "0.1.0"
+description = "Poetry configuration for WordpressSocial."
+authors = ["Aveek <aveeek.d22@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.27.1"
+boto3 = "^1.21.20"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
