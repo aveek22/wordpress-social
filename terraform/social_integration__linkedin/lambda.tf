@@ -13,11 +13,12 @@ resource "aws_lambda_function" "wordpress_social_linkedin" {
   function_name = "wordpress_social_linkedin"
   role = aws_iam_role.wordpress_social_linkedin_role.arn
   handler = "app.main"
+  source_code_hash = "${data.archive_file.wordpress_social_linkedin.output_base64sha256}"
+  runtime          = "python3.9"
+  timeout          =  90
   layers = [
     aws_lambda_layer_version.wordpress_social_lambda_layer.arn
   ]
-
-  runtime = "python3.9"
 
   tags = {
     Environment = "production"
