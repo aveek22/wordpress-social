@@ -176,3 +176,5 @@ terraform.rc
 # Lambda Layer Packages
 app/lambda/layers/packages/
 app/lambda/layers/requests.zip
+
+*.DS_Store*
