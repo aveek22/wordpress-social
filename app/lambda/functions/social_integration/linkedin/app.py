@@ -12,7 +12,7 @@ from publish import PublishLinkedIn
 
 # Setup Logger
 log = logging.getLogger()
-log.setLevel(logging.DEBUG)
+log.basicConfig(level=log.DEBUG, format='%(levelname)s - %(message)s')
 
 
 def main(event, context):

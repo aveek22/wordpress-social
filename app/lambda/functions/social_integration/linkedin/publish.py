@@ -6,7 +6,7 @@ import logging          # Log messages for debugging
 
 # Setup Logger
 log = logging.getLogger()
-log.setLevel(logging.DEBUG)
+log.basicConfig(level=log.DEBUG, format='%(levelname)s - %(message)s')
 
 class PublishLinkedIn:
     """ Publish content to LinkedIn page. """
