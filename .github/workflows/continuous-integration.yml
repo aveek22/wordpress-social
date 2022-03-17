@@ -1,4 +1,4 @@
-name: deploy_aws
+name: Continuous Integration
 
 on:
   push:
