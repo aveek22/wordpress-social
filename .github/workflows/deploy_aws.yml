@@ -3,7 +3,7 @@ name: deploy_aws
 on:
   push:
     branches:
-      - release
+      - master
 
 jobs:
   run_tests:
