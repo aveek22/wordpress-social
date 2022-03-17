@@ -2,7 +2,7 @@
     "python.linting.pylintEnabled": false,
     "python.linting.enabled": false,
     "python.testing.pytestArgs": [
-        "app"
+        "tests"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true
