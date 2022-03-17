@@ -174,7 +174,7 @@ override.tf.json
 terraform.rc
 
 # Lambda Layer Packages
-app/lambda/layers/packages/
-app/lambda/layers/requests.zip
+app/lambda_layers/packages/
+app/lambda_layers/requests.zip
 
 *.DS_Store*
