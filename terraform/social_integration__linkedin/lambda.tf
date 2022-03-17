@@ -25,12 +25,11 @@ resource "aws_lambda_function" "wordpress_social_linkedin" {
     Application = "wordpress-social"
   }
 
-  # environment {
-  #   variables = {
-  #       foo = "bar"
-  #       application_environment = "${var.environment}"
-  #   }
-  # }
+  environment {
+    variables = {
+        WORDPRESS_SOCIAL_LOG_LEVEL = "INFO"
+    }
+  }
 }
 
 output "wordpress_social_linkedin_arn" {
