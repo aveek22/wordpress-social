@@ -6,4 +6,28 @@ on:
       - release
 
 jobs:
-  deploy_aws:
+  run_tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        
+      - name: Get Poetry version
+        run: poetry --version
+
+      - name: Install dev dependencies with Poetry
+        run: poetry install
+
+      - name: Run tests
+        run: poetry run pytest
+      
