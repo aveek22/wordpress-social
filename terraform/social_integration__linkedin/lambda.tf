@@ -1,10 +1,10 @@
 locals {
-  lambda-zip-location = "../build/lambda/social_integration/linkedin.zip"
+  lambda-zip-location = "../build/aws_lambda/social_integration/linkedin.zip"
 }
 
 data "archive_file" "wordpress_social_linkedin" {
   type = "zip"
-  source_dir = "../app/lambda/functions/social_integration/linkedin/"
+  source_dir = "../app/lambda_functions/social_integration/linkedin/"
   output_path = local.lambda-zip-location
 }
 
