@@ -97,7 +97,7 @@ class PublishTwitter:
             try:
                 log.debug(f'Sharing post to Twitter.')
                 response = client.create_tweet(text=payload)
-                log.debug(f'Response Content: {response.text}')
+                log.debug(f"Response Content: {response.data['text']}")
                 
                 if(len(response.data['text']) > 0):
                     log.info(f'Post shared to Twitter successfully.')
