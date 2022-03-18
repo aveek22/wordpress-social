@@ -131,46 +131,52 @@ class PublishLinkedIn:
         username = self.username
         linkedin_user_id = self.linkedin_user_id
         
-        share_text = event['li_share_text']
-        share_title = event['li_share_title']
-        share_url = event['li_share_url']
-        share_thumbnail = event['li_share_thumbnail']
-        
-        linkedin_username_position_length = self._get_linkedin_username_position_length(share_text, username)
-        linkedin_user_id_start = linkedin_username_position_length['position']
-        linkedin_user_id_length = linkedin_username_position_length['length']
+        if('linkedin' in event):
+            """Generate payload only if data available for linkedin"""
 
-        log.info(f'Preparing payload for LinkedIn.')
+            share_text = event['linkedin']['li_share_text']
+            share_title = event['linkedin']['li_share_title']
+            share_url = event['linkedin']['li_share_url']
+            share_thumbnail = event['linkedin']['li_share_thumbnail']
+            
+            linkedin_username_position_length = self._get_linkedin_username_position_length(share_text, username)
+            linkedin_user_id_start = linkedin_username_position_length['position']
+            linkedin_user_id_length = linkedin_username_position_length['length']
 
-        payload = {
-            "content": {
-                "contentEntities": [
-                    {
-                        "entityLocation": share_url,
-                        "thumbnails": [
-                            {
-                                "resolvedUrl": share_thumbnail
-                            }
-                        ]
-                    }
-                ],
-                "title": share_title
-            },
-            'distribution': {
-                'linkedInDistributionTarget': {}
-            },
-            'owner': f'urn:li:organization:{organization_id}',
-            'text': {
-                'text': share_text,
-                'annotations': [
-                    {
-                        'entity' : linkedin_user_id,
-                        'length' : linkedin_user_id_length,
-                        'start' : linkedin_user_id_start
-                    }
-                ]
+            log.info(f'Preparing payload for LinkedIn.')
+
+            payload = {
+                "content": {
+                    "contentEntities": [
+                        {
+                            "entityLocation": share_url,
+                            "thumbnails": [
+                                {
+                                    "resolvedUrl": share_thumbnail
+                                }
+                            ]
+                        }
+                    ],
+                    "title": share_title
+                },
+                'distribution': {
+                    'linkedInDistributionTarget': {}
+                },
+                'owner': f'urn:li:organization:{organization_id}',
+                'text': {
+                    'text': share_text,
+                    'annotations': [
+                        {
+                            'entity' : linkedin_user_id,
+                            'length' : linkedin_user_id_length,
+                            'start' : linkedin_user_id_start
+                        }
+                    ]
+                }
             }
-        }
-        log.debug(f'Payload prepared.')
+            log.info(f'Payload prepared.')
+        else:
+            payload = False
+            log.info(f'Event for LinkedIn not found. Payload not generated. Application will quit.')
 
         return payload

@@ -42,7 +42,7 @@ def main(event, context):
     if(linkedin):
         # Get the payload from event
         payload = linkedin.get_payload(parsed_event)
-        log.info(f'Payload: {payload}')
+        log.debug(f'Payload: {payload}')
 
     if(payload):
         # Share content to LinkedIn page.
