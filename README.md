@@ -5,8 +5,16 @@ Share your Wordpress articles on Social Media.
 
 ## Install libraries for AWS Lambda Layer
 
-Use the following command to install specific modules into a directory.
+Use the following command from the root direcotry to install specific modules into a directory.
 
 ```bash
-pip install -r requirements.txt -t app/lambda/layers/packages/ --upgrade
+pip install -r app/lambda_layers/requirements.layers.txt -t app/lambda_layers/packa
+ges/python --upgrade
+```
+
+Run the following command to create a ZIP for Lambda Layers.
+
+```bash
+cd app/lambda_layers/packages
+zip -r python.zip python
 ```
