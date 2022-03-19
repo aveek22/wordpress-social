@@ -10,6 +10,10 @@ module "social_integration__facebook" {
     source  = "../terraform/social_integration__facebook"
 }
 
+module "social_integration__instagram" {
+    source  = "../terraform/social_integration__instagram"
+}
+
 module "parameter_store" {
     source  = "../terraform/parameter_store"
 }
