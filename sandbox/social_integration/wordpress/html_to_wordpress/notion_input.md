@@ -1,4 +1,4 @@
-# Introduction to LinkedIn REST API
+# Introduction to LinkedIn REST API (Sandbox)
 
 [LinkedIn](https://www.linkedin.com/) is a popular social media platform that allows users to connect to each other and maintain professional network. You can manage your profile and also create a company profile for your organization. An interesting feature of LinkedIn is the ability to share posts on your feed or on your organization’s feed. You can embed URLs, provide hashtags and emojis and also share images and videos in your post. Although the primary way of sharing content on LinkedIn is by using the web application, you can also do it programmatically using the [REST APIs](https://docs.microsoft.com/en-us/linkedin/) provided by LinkedIn and a programming language of your choice.
 
