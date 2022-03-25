@@ -10,6 +10,7 @@ python = "^3.9"
 requests = "^2.27.1"
 boto3 = "^1.21.20"
 tweepy = "^4.7.0"
+Markdown = "^3.3.6"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.0"
