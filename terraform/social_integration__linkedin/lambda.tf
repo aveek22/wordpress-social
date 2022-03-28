@@ -2,9 +2,9 @@ locals {
   lambda-zip-location = "../build/aws_lambda/social_integration/linkedin.zip"
 }
 
-module "wordpress_social_lambda_layer" {
-    source  = "../../terraform/wordpress_social_lambda_layer"
-}
+# module "wordpress_social_lambda_layer" {
+#     source  = "../../terraform/wordpress_social_lambda_layer"
+# }
 
 data "archive_file" "wordpress_social_linkedin" {
   type = "zip"
@@ -25,7 +25,7 @@ resource "aws_lambda_function" "wordpress_social_linkedin" {
   runtime          = "python3.9"
   timeout          =  90
   layers = [
-    module.wordpress_social_lambda_layer.wordpress_social_lambda_layer_arn
+    "${var.lambda_layer_arn}"
   ]
 
   tags = {
