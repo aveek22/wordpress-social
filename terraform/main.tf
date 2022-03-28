@@ -20,8 +20,9 @@ module "parameter_store" {
 
 terraform {
   backend "s3" {
-      bucket    = "wordpress-social"
+      bucket    = "wordpress-social-001"
       key       = "terraform-state/terraform.tfstate"
       region    = "eu-west-1"
+      profile   = "aveek2021"
   }
 }
