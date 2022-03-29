@@ -30,3 +30,14 @@ Create the python virtual environment
 ```bash
 python -m venv .venv
 ```
+
+Install Poetry
+```bash
+pip install --upgrade pip
+pip install poetry
+```
+
+Install dependencies
+```bash
+poetry install
+```
