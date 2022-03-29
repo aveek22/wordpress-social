@@ -41,3 +41,8 @@ Install dependencies
 ```bash
 poetry install
 ```
+
+To add new packages to the module, consider using poetry
+```bash
+poetry add <packages>
+```
