@@ -18,3 +18,15 @@ Run the following command to create a ZIP for Lambda Layers.
 cd app/lambda_layers/packages
 zip -r python.zip python
 ```
+
+## Installation
+Download or clone the repository from GitHub.
+```bash
+git clone https://github.com/aveek22/wordpress-social.git
+cd wordpress-social
+```
+
+Create the python virtual environment
+```bash
+python -m venv .venv
+```
