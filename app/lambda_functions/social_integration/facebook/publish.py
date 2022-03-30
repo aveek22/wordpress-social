@@ -4,8 +4,6 @@ import requests         # Use REST API calls to interact with services
 import logging          # Log messages for debugging
 import os               # Get environment variables
 
-from config import Facebook
-
 
 # Setup Logger
 log = logging.getLogger(__name__)
@@ -21,8 +19,7 @@ class PublishFacebook:
         self.base_api_url = f"https://graph.facebook.com/v13.0/{self.page_id}/feed"
         log.debug(f'Facebook Share URL set: {self.base_api_url}')
 
-        # self.page_access_token = self._get_access_token_from_parameter_store()
-        self.page_access_token = Facebook.PAGE_ACCESS_TOKEN
+        self.page_access_token = self._get_access_token_from_parameter_store()
         log.debug(f'Access Token fetched from Parameter Store')
 
         log.info(f'PublishFacebook object initiated.')
