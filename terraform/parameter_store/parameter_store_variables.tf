@@ -27,3 +27,8 @@ variable "facebook_page_access_token" {
   type      = string
   default = "EAAFZBmZB3oSg8BAOoznX3TKnSQvvYfJogp7Dr2hrlZCZBZBNg61sIVGhqSxhLXgAdHhCDMMhumS4n7YhZAbqssphQNT0nqeffdhoDZBx41bKmmc8BZBjVC1W6AuHCbZAhlA1m7tC4M5i7crfda3RHJ2MZAhDT1vx84auYRuMDl76mGA0hO7cptZACEzLMQuj35YKra6HLUauOjlnXpPBq5Je4YHU42gfuR2XTQZD"
 }
+
+variable "facebook_user_access_token" {
+  type      = string
+  default = "EAAFZBmZB3oSg8BAHYpUYSum0PAsebZAzuF8Qyce0UZC2x9Fe75kxeVUW89agaNVbSZBAq1ZC9bNtHLCInomqZBcmYVbpjKAbJczNDePv4lpFuO8FL0YzyznboAMsem8v9yQnBFsS3OMcgsZC9y9sgFG3zJuNZCWM1sI8kmZCJaW9ywZCFrkBco61tBOqbL4UB6gX0WkRFrPPdsjl5FDWtioQdEjfakp4tF2iBy4tlP3n92qJZBKcxunglxdcVEU4wkoaRuUZD"
+}
