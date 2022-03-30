@@ -42,10 +42,11 @@ def main(event, context):
     if(facebook):
         # Get the payload from event
         payload = facebook.get_payload(parsed_event)
-        log.debug(f'Payload: {payload}')
+        # Payload contains access_token. DON'T LOG
+        # log.debug(f'Payload: {payload}') 
 
     if(payload):
-        # Share content to LinkedIn page.
+        # Share content to Facebook page.
         facebook.post_content(payload)
 
     log.info(f'*************************** Application execution completed. ***************************')

@@ -4,12 +4,14 @@ import requests         # Use REST API calls to interact with services
 import logging          # Log messages for debugging
 import os               # Get environment variables
 
+from config import Facebook
+
 
 # Setup Logger
 log = logging.getLogger(__name__)
 
 class PublishFacebook:
-    """ Publish content to LinkedIn page. """
+    """ Publish content to Facebook page. """
 
 
     def __init__(self):
@@ -17,12 +19,13 @@ class PublishFacebook:
         self._get_facebook_page_details()
         
         self.base_api_url = f"https://graph.facebook.com/v13.0/{self.page_id}/feed"
-        log.debug(f'LinkedIn Share URL set: {self.base_api_url}')
+        log.debug(f'Facebook Share URL set: {self.base_api_url}')
 
-        self.page_access_token = self._get_access_token_from_parameter_store()
+        # self.page_access_token = self._get_access_token_from_parameter_store()
+        self.page_access_token = Facebook.PAGE_ACCESS_TOKEN
         log.debug(f'Access Token fetched from Parameter Store')
 
-        log.info(f'PublishLinkedIn object initiated.')
+        log.info(f'PublishFacebook object initiated.')
 
 
     def _get_access_token_from_parameter_store(self):
@@ -38,7 +41,7 @@ class PublishFacebook:
         # Get the Parameter details from AWS
         try:
             response = client.get_parameter(
-                Name = "/social_integration/linkedin/access_token",
+                Name = "/social_integration/facebook/page_access_token",
                 WithDecryption = False
             )
             log.info(f'Access token obtained from parameter store.')
@@ -68,8 +71,10 @@ class PublishFacebook:
                 log.debug(f'Response Status Code: {response.status_code}')
                 log.debug(f'Response Content: {response.json()}')
                 
-                if(response.status_code == 201):
+                if(response.status_code == 200):
                     log.info(f'Post shared to Facebook successfully.')
+                elif(response.status_code == 400):
+                    log.info(f'Unable to share content to Facebook. Invalid Access Token.')
                 elif(response.status_code == 422):
                     log.info(f'Unable to share content to Facebook. Duplicate post detected.')
                 else:
@@ -80,10 +85,6 @@ class PublishFacebook:
     
     def get_payload(self,event):
         """ Prepare the content payload to share. """
-        
-        organization_id = self.organization_id
-        username = self.username
-        linkedin_user_id = self.linkedin_user_id
         
         if('facebook' in event):
             """Generate payload only if data available for Facebook"""
