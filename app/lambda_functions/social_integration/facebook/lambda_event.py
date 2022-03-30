@@ -10,10 +10,10 @@ log.basicConfig(level=log.DEBUG)
 
 
 def get_lambda_event():
-    """ Read linkedin_event.json file and return a mock SQS event payload. """
+    """ Read event.json file and return a mock SQS event payload. """
 
     try:
-        with open('app/lambda_functions/social_integration/linkedin/event.json', 'r') as f:
+        with open('app/lambda_functions/social_integration/facebook/event.json', 'r') as f:
             data = json.load(f)
         log.debug(f'Reading from JSON event file successful.')
     except Exception as e:
