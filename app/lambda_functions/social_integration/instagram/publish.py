@@ -92,8 +92,8 @@ class PublishInstagram:
     def _get_instagram_profile_details(self):
         """ Get LinkedIn data from database. """
 
-        self.app_id                 = "420683153164815"
-        self.app_secret             = "aedb53963ae446e070c3435befe2c8f0"
+        self.app_id                 = ""
+        self.app_secret             = ""
         self.business_account_id    = "17841451612144935"
 
 
