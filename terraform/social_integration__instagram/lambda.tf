@@ -10,10 +10,10 @@ data "archive_file" "wordpress_social_instagram" {
   type = "zip"
   source_dir = "../app/lambda_functions/social_integration/instagram/"
   output_path = local.lambda-zip-location
-  # excludes = [
-  #   "event.json",
-  #   "lambda_event.py"
-  # ]
+  excludes = [
+    "event.json",
+    "lambda_event.py"
+  ]
 }
 
 resource "aws_lambda_function" "wordpress_social_instagram" {
