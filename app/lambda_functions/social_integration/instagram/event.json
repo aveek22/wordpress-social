@@ -1,0 +1,8 @@
+{
+    "instagram" : {
+        "ig_image_url" : "https://i.imgur.com/R4zJRaX.jpeg",
+        "ig_caption" : "Learn about SQL Server Security by Aveek Das - Introduction to Row Level Security in SQL Server 101",
+        "ig_hashtags"   : "#sql #sqlserver",
+        "ig_share_url"  : "https://datacloudmag.com/introduction-to-row-level-security-in-sql-server/"
+    }
+}
