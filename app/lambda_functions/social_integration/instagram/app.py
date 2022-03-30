@@ -8,7 +8,7 @@ import logging      # Log messages for debugging
 import os           # Get environment variables
 
 # Import custom modules
-from publish import PublishFacebook
+from publish import PublishInstagram
 
 
 # Setup Logger
@@ -29,25 +29,25 @@ def main(event, context):
     # Setting control flow variables as False
     log.debug(f'Setting control flow variables as False.')
     parsed_event = False
-    facebook = False
+    instagram = False
     payload = False
 
     # Parse the SQS payload and return event
     parsed_event = parse_event(event)
     
     if(parsed_event):
-        # Create the Facebook object
-        facebook = PublishFacebook()
+        # Create the Instagram object
+        instagram = PublishInstagram()
 
-    if(facebook):
+    if(instagram):
         # Get the payload from event
-        payload = facebook.get_payload(parsed_event)
+        payload = instagram.get_payload(parsed_event)
         # Payload contains access_token. DON'T LOG
         # log.debug(f'Payload: {payload}') 
 
     if(payload):
         # Share content to Facebook page.
-        facebook.post_content(payload)
+        instagram.post_content(payload)
 
     log.info(f'*************************** Application execution completed. ***************************')
 
