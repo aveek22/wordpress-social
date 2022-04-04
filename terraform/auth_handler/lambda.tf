@@ -36,6 +36,14 @@ resource "aws_lambda_function" "wordpress_social_auth_handler" {
   }
 }
 
+resource "aws_lambda_permission" "apigw" {
+   statement_id  = "AllowAPIGatewayInvoke"
+   action        = "lambda:InvokeFunction"
+   function_name = aws_lambda_function.wordpress_social_auth_handler.function_name
+   principal     = "apigateway.amazonaws.com"
+   source_arn = "${aws_api_gateway_rest_api.auth_handler.execution_arn}/*/*"
+}
+
 output "wordpress_social_auth_handler_arn" {
   description = "The ARN of the Lambda function: wordpress_social_auth_handler"
   value       = join("", aws_lambda_function.wordpress_social_auth_handler.*.arn)
