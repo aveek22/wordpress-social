@@ -29,6 +29,11 @@ resource "aws_api_gateway_method" "proxy_root" {
    resource_id   = aws_api_gateway_rest_api.auth_handler.root_resource_id
    http_method   = "ANY"
    authorization = "NONE"
+   request_parameters = {
+     "method.request.querystring.code"    = true
+     "method.request.querystring.state"   = true
+     
+   }
 }
 resource "aws_api_gateway_integration" "lambda_root" {
    rest_api_id = aws_api_gateway_rest_api.auth_handler.id
