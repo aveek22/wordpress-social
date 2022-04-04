@@ -1,3 +1,8 @@
+module "auth_handler" {
+    source  = "../terraform/auth_handler"
+    lambda_layer_arn = "${module.wordpress_social_lambda_layer.wordpress_social_lambda_layer_arn}"
+}
+
 module "social_integration__linkedin" {
     source  = "../terraform/social_integration__linkedin"
     lambda_layer_arn = "${module.wordpress_social_lambda_layer.wordpress_social_lambda_layer_arn}"
