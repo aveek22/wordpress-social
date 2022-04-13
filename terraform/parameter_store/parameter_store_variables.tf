@@ -32,3 +32,8 @@ variable "facebook_user_access_token" {
   type      = string
   default = "EAAFZBmZB3oSg8BAHYpUYSum0PAsebZAzuF8Qyce0UZC2x9Fe75kxeVUW89agaNVbSZBAq1ZC9bNtHLCInomqZBcmYVbpjKAbJczNDePv4lpFuO8FL0YzyznboAMsem8v9yQnBFsS3OMcgsZC9y9sgFG3zJuNZCWM1sI8kmZCJaW9ywZCFrkBco61tBOqbL4UB6gX0WkRFrPPdsjl5FDWtioQdEjfakp4tF2iBy4tlP3n92qJZBKcxunglxdcVEU4wkoaRuUZD"
 }
+
+variable "notion_access_token" {
+  type      = string
+  default = "secret_dtG5JWfd9ifrfV4FMqneH0AGo63AS943ovHfZu73IL7"
+}
