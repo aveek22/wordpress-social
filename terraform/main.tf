@@ -23,6 +23,11 @@ module "social_integration__instagram" {
     lambda_layer_arn = "${module.wordpress_social_lambda_layer.wordpress_social_lambda_layer_arn}"
 }
 
+module "notion_automator__refresh_my_day" {
+    source  = "../terraform/notion_automator__refresh_my_day"
+    lambda_layer_arn = "${module.wordpress_social_lambda_layer.wordpress_social_lambda_layer_arn}"
+}
+
 module "parameter_store" {
     source  = "../terraform/parameter_store"
 }
