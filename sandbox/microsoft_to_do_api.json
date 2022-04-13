@@ -1,0 +1,42 @@
+{
+    "@odata.etag": "W/\"vpBbtNr44UOzlIyv+d+28AAEbPiXEg==\"",
+    "importance": "normal",
+    "isReminderOn": true,
+    "status": "notStarted",
+    "title": "Task created from Microsoft Graph Explorer 3",
+    "createdDateTime": "2022-04-06T10:50:13.6840262Z",
+    "lastModifiedDateTime": "2022-04-06T10:50:50.1819588Z",
+    "id": "AQMkADAwATM0MDAAMS0wMABiMy00NTljLTAwAi0wMAoARgAAA6rNyp88--hNlwAYhRS2l9UHAL6QW7Ta_OFDs5SMr-nftvAAAAIBEgAAAL6QW7Ta_OFDs5SMr-nftvAABGzXlLUAAAA=",
+    "body": {
+        "content": "This is the body of the task that is to be created.",
+        "contentType": "text"
+    },
+    "dueDateTime": {
+        "dateTime": "2022-04-19T22:00:00.0000000",
+        "timeZone": "UTC"
+    },
+    "recurrence": {
+        "pattern": {
+            "type": "weekly",
+            "interval": 1,
+            "month": 0,
+            "dayOfMonth": 0,
+            "daysOfWeek": [
+                "wednesday"
+            ],
+            "firstDayOfWeek": "sunday",
+            "index": "first"
+        },
+        "range": {
+            "type": "noEnd",
+            "startDate": "2022-04-20",
+            "endDate": "0001-01-01",
+            "recurrenceTimeZone": "UTC",
+            "numberOfOccurrences": 0
+        }
+    },
+    "reminderDateTime": {
+        "dateTime": "2022-04-07T07:00:00.0000000",
+        "timeZone": "UTC"
+    }
+}
