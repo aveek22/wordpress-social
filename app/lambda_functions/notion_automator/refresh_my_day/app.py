@@ -1,5 +1,5 @@
 """
-    This function will share content to the LinkedIn page.
+    This function will update MyDay Tasks in Notion.
 """
 
 # Import system modules
@@ -22,15 +22,15 @@ log = logging.getLogger(__name__)
 
 
 def main(event, context):
-    """ Lambda Handler for LinkedIn content publish """
+    """ Lambda Handler for MyDay Tasks """
 
     log.info(f'*************************** Application execution started. ***************************')
 
     # Setting control flow variables as False
     log.debug(f'Setting control flow variables as False.')
-    parsed_event = False
-    linkedin = False
-    payload = False
+    parsed_event    = False
+    notion          = False
+    my_day_tasks    = False
 
     # Parse the event payload and return event
     parsed_event = parse_event(event)
