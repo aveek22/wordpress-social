@@ -119,6 +119,7 @@ class NotionMyDay:
     def get_my_day(self, event):
         """ Get MyDay tasks. """
         
+        log.info(f"Received event payload. {event}")
         database_id     = event['database_id']
         database_url    = f"https://api.notion.com/v1/databases/{database_id}/query"
         my_day_tasks    = False

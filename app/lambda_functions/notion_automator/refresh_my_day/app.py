@@ -28,20 +28,22 @@ def main(event, context):
 
     # Setting control flow variables as False
     log.debug(f'Setting control flow variables as False.')
-    parsed_event    = False
+    parsed_event    = True
     notion          = False
     my_day_tasks    = False
 
+    log.info(f'Received message from event: {event}')
+
     # Parse the event payload and return event
-    parsed_event = parse_event(event)
+    # parsed_event = parse_event(event)
     
-    if(parsed_event):
+    if(event):
         # Create the Notion object
         notion = NotionMyDay()
 
     if(notion):
         # Get the MyDay tasks with ID
-        my_day_tasks = notion.get_my_day(parsed_event)
+        my_day_tasks = notion.get_my_day(event)
         log.debug(f'MyDay task list: {my_day_tasks}')
 
     if(my_day_tasks):
