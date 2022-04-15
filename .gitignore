@@ -138,7 +138,7 @@ config.py
 # Terraform files
 .terraform
 *.hcl
-parameter_store_variables.tf
+parameter_store_secrets.tf
 # Local .terraform directories
 **/.terraform/*
 
