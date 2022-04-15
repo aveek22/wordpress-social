@@ -53,11 +53,10 @@ class PublishInstagram:
                 response = requests.post(url=oauth_url, params=oauth_params)
                 response_json = response.json()
                 access_token = response_json['access_token']
+                log.info(f'Access Token obtained from User Access Token.')
             except Exception as e:
                 access_token = False
                 log.error(f"Unable to prepare access token. Error: {e}")
-            
-            log.info(f'Access Token obtained from User Access Token.')
             return access_token
         else:
             log.warn(f'Access Token not set. Application will quit.')
