@@ -17,7 +17,7 @@ class PublishInstagram:
     def __init__(self):
         log.debug(f'Initiate PublishInstagram')
         
-        self._get_instagram_profile_details()
+        ig_details = self._get_instagram_profile_details_from_parameter_store()
         log.debug(f'LinkedIn profile details fetched.')
         
         base_api_url = f"https://graph.facebook.com/v13.0/{self.business_account_id}"
@@ -70,6 +70,7 @@ class PublishInstagram:
         try:
             log.debug(f'Creating boto3 client for parameter store.')
             # session = boto3.Session(profile_name="aveek2021")
+            # client = session.client('ssm')
             client = boto3.client('ssm')
         except Exception as e:
             log.error(f'Error cretaing SSM client Boto3. {e}')
@@ -88,12 +89,59 @@ class PublishInstagram:
             return False
 
 
-    def _get_instagram_profile_details(self):
-        """ Get LinkedIn data from database. """
+    def _get_instagram_profile_details_from_parameter_store(self):
+        """ Get Instagram profile details from AWS Parameter store. """
+        ig_details = False
 
-        self.app_id                 = ""
-        self.app_secret             = ""
-        self.business_account_id    = "17841451612144935"
+        # Create the boto client
+        try:
+            log.debug(f'Creating boto3 client for parameter store.')
+            # session = boto3.Session(profile_name="aveek2021")
+            # client = session.client('ssm')
+            client = boto3.client('ssm')
+        except Exception as e:
+            log.error(f'Error cretaing SSM client Boto3. {e}')
+
+        # Get the Parameter details from AWS
+        try:
+            response = client.get_parameters_by_path(
+                Path = "/social_integration/instagram",
+                WithDecryption = False
+            )
+            log.info(f'Instagram profile details obtained from parameter store.')
+            
+            # Extract the profile details and set values
+            ig_details = self._set_instagram_profile_details(response['Parameters'])
+        except Exception as e:
+            log.error(f'Error fetching parameter from Parameter Store. {e}')
+            
+        return ig_details
+        
+        
+    def _set_instagram_profile_details(self, instagram_details):
+        # Set values to object
+        log.debug(f"Setting Instagram profile details...")
+        param_path = "/social_integration/instagram"
+        ig_details = False
+
+        try:
+            for param in instagram_details:
+                log.debug(f"Enumerating {param['Name']}...")
+                if param['Name'] == f"{param_path}/app_id":
+                    self.app_id = param['Value']
+                    log.debug(f"AppID set.")
+                elif param['Name'] == f"{param_path}/app_secret":
+                    self.app_secret = param['Value']
+                    log.debug(f"AppSecret set.")
+                elif param['Name'] == f"{param_path}/business_account_id":
+                    log.debug(f"Business Account ID set.")
+                    self.business_account_id = param['Value']
+            
+            ig_details = True
+        except Exception as e:
+            log.error(f"Error setting Instagram profile details. Error: {e}")
+
+        return ig_details
 
 
     def _upload_media(self, payload):
