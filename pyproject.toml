@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-requests = "^2.27.1"
+requests = "^2.28.2"
 boto3 = "^1.21.20"
 tweepy = "^4.7.0"
 Markdown = "^3.3.6"
