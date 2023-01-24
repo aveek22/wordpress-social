@@ -35,17 +35,17 @@ def main(event, context):
     # Parse the SQS payload and return event
     parsed_event = parse_event(event)
     
-    if(parsed_event):
+    if parsed_event:
         # Create the Instagram object
         instagram = PublishInstagram()
 
-    if(instagram):
+    if instagram:
         # Get the payload from event
         payload = instagram.get_payload(parsed_event)
         # Payload contains access_token. DON'T LOG
         # log.debug(f'Payload: {payload}') 
 
-    if(payload):
+    if payload:
         # Share content to Facebook page.
         instagram.post_content(payload)
 

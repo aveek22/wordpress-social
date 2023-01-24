@@ -35,17 +35,17 @@ def main(event, context):
     # Parse the SQS payload and return event
     parsed_event = parse_event(event)
     
-    if(parsed_event):
+    if parsed_event:
         # Create the Facebook object
         facebook = PublishFacebook()
 
-    if(facebook):
+    if facebook:
         # Get the payload from event
         payload = facebook.get_payload(parsed_event)
         # Payload contains access_token. DON'T LOG
         # log.debug(f'Payload: {payload}') 
 
-    if(payload):
+    if payload:
         # Share content to Facebook page.
         facebook.post_content(payload)
 
@@ -79,5 +79,5 @@ if __name__ == '__main__':
     sqs_payload = lambda_event.get_lambda_event()
     
     # Trigger the main function
-    if(sqs_payload):
+    if sqs_payload:
         main(sqs_payload, '')
