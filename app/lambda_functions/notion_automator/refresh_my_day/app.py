@@ -3,13 +3,12 @@
 """
 
 # Import system modules
-import json         # Deal with JSON data
-import logging      # Log messages for debugging
-import os           # Get environment variables
+import json  # Deal with JSON data
+import logging  # Log messages for debugging
+import os  # Get environment variables
 
 # Import custom modules
 from notion import NotionMyDay
-
 
 # Setup Logger
 root = logging.getLogger()
@@ -28,25 +27,25 @@ def main(event, context):
 
     # Setting control flow variables as False
     log.debug(f'Setting control flow variables as False.')
-    parsed_event    = True
-    notion          = False
-    my_day_tasks    = False
+    parsed_event = True
+    notion = False
+    my_day_tasks = False
 
     log.info(f'Received message from event: {event}')
 
     # Parse the event payload and return event
     # parsed_event = parse_event(event)
-    
-    if(event):
+
+    if (event):
         # Create the Notion object
         notion = NotionMyDay()
 
-    if(notion):
+    if (notion):
         # Get the MyDay tasks with ID
         my_day_tasks = notion.get_my_day(event)
         log.debug(f'MyDay task list: {my_day_tasks}')
 
-    if(my_day_tasks):
+    if (my_day_tasks):
         # Refresh MyDay Tasks.
         notion.refresh_my_day(my_day_tasks)
 
@@ -55,7 +54,7 @@ def main(event, context):
 
 def parse_event(event):
     """ Parse the event payload and return the database_id. """
-    
+
     log.info(f'Received message from SQS: {event}')
 
     try:
@@ -77,7 +76,7 @@ if __name__ == '__main__':
 
     # Get the test SQS payload for Lambda function
     payload = lambda_event.get_lambda_event()
-    
+
     # Trigger the main function
-    if(payload):
+    if (payload):
         main(payload, '')
