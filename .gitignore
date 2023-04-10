@@ -179,3 +179,5 @@ app/lambda_layers/packages/
 app/lambda_layers/requests.zip
 
 *.DS_Store*
+
+*.idea*
