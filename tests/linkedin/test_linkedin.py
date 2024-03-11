@@ -4,7 +4,7 @@
 import pytest
 
 # Import application modules
-from app.lambda_functions.social_integration.linkedin.publish import PublishLinkedIn
+from src.lambda_functions.social_integration.linkedin.publish import PublishLinkedIn
 
 
 
