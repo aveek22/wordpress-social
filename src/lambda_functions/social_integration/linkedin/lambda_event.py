@@ -19,8 +19,8 @@ def get_lambda_event():
     except Exception as e:
         data = False
         log.error(f'Error in reading JSON event file. {e}')
-    
-    if(data):
+
+    if data:
         sqs_event = {
             "Records": [
                 {

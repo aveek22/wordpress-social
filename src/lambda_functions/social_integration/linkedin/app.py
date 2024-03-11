@@ -35,16 +35,16 @@ def main(event, context):
     # Parse the SQS payload and return event
     parsed_event = parse_event(event)
     
-    if(parsed_event):
+    if parsed_event:
         # Create the LinkedIn object
         linkedin = PublishLinkedIn()
 
-    if(linkedin):
+    if linkedin:
         # Get the payload from event
         payload = linkedin.get_payload(parsed_event)
         log.debug(f'Payload: {payload}')
 
-    if(payload):
+    if payload:
         # Share content to LinkedIn page.
         linkedin.post_content(payload)
 
